@@ -1,0 +1,126 @@
+<!-- wp:paragraph -->
+<p><em>Mining camps that ran out of ore, valleys drowned by reservoirs, towns emptied by war, volcanoes and Chernobyl, and thousands of English villages that faded away centuries ago. I mapped every abandoned place I could find in open data and coloured each by why it emptied. The biggest surprise was how rarely the record says.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/ghost-towns/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23857616">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>There is a lovely definition of a ghost town, from the Texas historian T. Lindsey Baker: "a town for which the reason for being no longer exists". It invites the obvious question. What were those reasons, and where did they run out? A silver seam that played out, a railway that went somewhere else, a dam, an army, an earthquake, a reactor, or simply the young leaving one by one. I wanted a map of all of it, every abandoned place coloured by why.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Wikidata, the open database behind Wikipedia, has classes for exactly this: ghost town, abandoned village and deserted medieval village. With a position, there are {{n_ghost|int}} of them, once you strip out {{n_mexico|int}} Mexican municipalities that are very much alive but sneak in through a faulty link in Wikidata's family tree of classes, and set aside {{n_ancient|int}} ancient cities. To these I added England's {{n_dmv|int}} deserted medieval villages and hamlets from Maurice Beresford's gazetteer, which I mapped earlier this year in <a href="https://tristan-hotham.github.io/lost-villages/">The Villages That Vanished</a>. For the reasons, I read Wikipedia's 'List of ghost towns by country' ({{n_wiki|int}} places) and its article on ghost towns.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_world.png|World map of abandoned settlements: a dense grey mass across the United States, a solid magenta block over England, scattered amber mining towns in Australia and the American West, and coloured points across Europe for war, disasters, reservoirs and the Chernobyl zone, with most of Africa and Asia nearly empty|Every abandoned settlement in the data, coloured by why it was abandoned. Grey: the record does not say. Ringed: well-known places from Wikipedia's list, placed by hand.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A map of who wrote it down</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The first thing the map shows is not where places were abandoned but where people have catalogued them. {{us_share_wd|pct}} of Wikidata's ghost towns are in the United States, {{us_n|int}} of them, and {{us_desc_formula_share|pct}} of those carry the same one-line description, "ghost town in such-and-such county", the fingerprint of entries added in bulk. Canada has {{ca_n|int}}, Greece {{gr_n|int}}, Australia {{au_n|int}}. All of Africa has {{africa_n|int}}.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_countries.png|Horizontal bar chart of abandoned settlements by country: the United States 2,700 and England's deserted medieval villages 2,074 far ahead, then Canada 265, Greece 101, Australia 58 and short bars for the rest, almost all grey for reason not recorded|Abandoned settlements by country, coloured by reason. England's deserted medieval villages are a row of their own.}}
+
+<!-- wp:paragraph -->
+<p>England is the other giant. Historians have been walking its fields looking for lost villages for seventy years, and their gazetteer makes England {{dmv_share_map|pct}} of everything on the map. Together, the United States and England account for {{us_dmv_share_map|pct}}. That is not a fact about history. It is a fact about bulk imports, enthusiasm and scholarship.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Why, where anyone says</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I gave each place a reason using simple word rules, the same for every place and all published: "Chernobyl" means nuclear, "reservoir" or "dam" means flooded, "gold" or "colliery" means mining, and so on, with a confidence for each. Run on Wikidata, the rules find a reason for just {{wd_known|int}} of {{n_ghost|int}} ghost towns, {{wd_known_share|pct}}, and {{wd_mining_low|int}} of those rest only on a name like Galena or Silver City. Wikipedia's list is far chattier: {{wiki_known|int}} of its {{n_wiki|int}} places come with a reason.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_continents.png|Stacked bars of the reasons in Wikipedia's list of ghost towns by continent: Oceania and Africa mostly amber for mining, Europe a mix led by red for war with green for the Chernobyl zone, North America split between blue disasters, teal reservoirs and amber mining|Reasons in Wikipedia's 'List of ghost towns by country', by continent. North America here excludes the United States and Canada, which have their own lists.}}
+
+<!-- wp:paragraph -->
+<p>Mining and resource booms come first ({{wiki_reason.mining|int}} places), then war ({{wiki_reason.war|int}}) and disasters ({{wiki_reason.disaster|int}}), economic decline ({{wiki_reason.economic|int}}), reservoirs ({{wiki_reason.reservoir|int}}) and nuclear accidents ({{wiki_reason.nuclear|int}}). Each continent has its own story. Australia is a land of dead gold and copper towns: {{wiki_au_mining|int}} of its {{wiki_au_n|int}} entries. Europe's list is led by war, from Oradour-sur-Glane, destroyed with its people by the Waffen-SS, to the English villages taken for army training in the Second World War, like Tyneham and Imber. Mexico's is split between old mining towns, like the silver town of Real de Catorce, and villages drowned by reservoirs.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:pullquote -->
+<figure class="wp-block-pullquote"><blockquote><p>{{us_share_wd|pct}} of Wikidata's ghost towns are American, and only {{wd_known_share|pct}} of them say why they died.</p></blockquote></figure>
+<!-- /wp:pullquote -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">The Wild West, by name only</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The ghost town of the imagination is a wooden street in Nevada, built for a mine. The data half agree. {{us_west_n|int}} of America's ghost towns are in the 11 western states, and {{us_west_mining|int}} of them are tied to mining, against {{us_rest_mining|int}} in all the rest of the country. But only {{us_west_mining_hm|int}} of those say so in words; {{us_west_mining_low|int}} are just towns called Galena, Borax or Silver Reef. Bodie and Rhyolite, two of the most famous mining ghost towns there are, have no reason recorded at all. And the two states with the most ghost towns are Texas ({{us_tx|int}}) and Missouri ({{us_mo|int}}).</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_us_states.png|Bar chart of Wikidata ghost towns in the 20 US states with most: Texas 335 and Missouri 289 lead, then Nevada 200, California 146, Utah 134 and the other western states in darker bars, with small amber segments for mining|Wikidata ghost towns by US state. Darker: the 11 western states. Amber: tied to mining.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">England's thousands, and the Soviet north</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>England's lost villages are ghost towns of a quieter kind: bumps in a field and a hollow way where the street ran. The Black Death gets the blame, but of the {{dmv_dated|int}} sites with a date, only {{dmv_plague_period|pct}} were deserted in the century after 1348, and {{dmv_1450_1699|pct}} between 1450 and 1699, when landlords enclosed the fields and turned them to sheep. In the gazetteer's accounts, enclosure and pasture come up {{dmv_causes.enclosure_or_pasture|int}} times and plague {{dmv_causes.plague|int}}.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_england.png|Two bar charts of England's deserted medieval villages: by presumed period of desertion, rising from 20 before 1348 to a peak of 98 in 1550 to 1699, and by county, led by Yorkshire 358, Lincolnshire 220 and Northumberland 165|England's deserted medieval villages: when they were deserted, and where.}}
+
+<!-- wp:paragraph -->
+<p>The former Soviet Union tells three stories. The biggest is Chernobyl: {{chernobyl_wiki|int}} of the places in Wikipedia's list for Ukraine and Belarus were evacuated after 1986, Pripyat among them. Then there are the mining towns of the far north: Kadykchan in Magadan Oblast, Khalmer-Yu, where the mines were shut and the settlement wound up by 1995, and Pyramiden, the Soviet coal town on Svalbard. And there is the war: {{ua_2022_wiki|int}} Ukrainian towns in the list, such as Soledar and Popasna, emptied by fighting since 2022. Wikidata, meanwhile, has {{ps_wd_n|int}} ghost towns in all 15 republics, and {{ps_wd_nolabel|int}} of them have no English name.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_when.png|Two stacked bar charts of when places were abandoned: by century, a hump of English deserted villages from the 1300s to the 1600s and then a tall bar for the 1900s; and by decade since 1840, rising through the twentieth century with teal reservoirs in the 1930s to 1960s, green Chernobyl in the 1980s and a high 2010s|When places were abandoned, where the record gives a year, coloured by reason.}}
+
+<!-- wp:paragraph -->
+<p>When the record gives a date, it is mostly recent: {{wiki_dated_since1900_share|pct}} of dated places in Wikipedia's list were abandoned after 1900. The 1950s were the age of the reservoir and the mine closure, the 1980s of Chernobyl, and the 2010s have the most of any decade. Abandonment is not a thing of the past.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>I took every Wikidata item with a position classed as a ghost town, abandoned village or deserted medieval village, kept the real ghost towns and moved ancient cities to their own layer. England's deserted villages come from Beresford's gazetteer (University of Hull). Reasons come from keyword rules on Wikidata descriptions and on Wikipedia's 'List of ghost towns by country' and 'Ghost town' article, in a fixed order when several match, each with a confidence: high if a text says it, medium if a Wikidata class implies it, low if only the name does. Because most of the list's famous places, from Pripyat to Hashima, are not in the Wikidata extract and the list has no coordinates, I placed {{n_hand|int}} of them by hand at approximate positions; they are on the map but in no count. Word rules make mistakes, the map shows the record rather than history, and most of Africa, Asia and South America is nearly blank. The paper has the full method and every caveat.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/ghost-towns/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23857616">Read the paper</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/ghost-towns">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Notes and sources</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Wikidata (https://www.wikidata.org/), items classed as ghost town, abandoned village or deserted medieval village, queried through QLever in 2026. CC0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Beresford's Lost Villages, University of Hull (https://dmv.wordpress.hull.ac.uk/), from M. Beresford and J. Hurst's gazetteer. CC BY-NC-SA 4.0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>English Wikipedia, 'List of ghost towns by country' and 'Ghost town', 2026. CC BY-SA 4.0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Natural Earth countries and states (public domain).</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->

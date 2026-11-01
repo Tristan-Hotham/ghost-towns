@@ -1,0 +1,49 @@
+state,west,ghost_towns,mining,mining_high_or_medium,per_10000_km2
+Texas,False,335,5,0,4.89
+Missouri,False,289,0,0,16.01
+Nevada,True,200,19,1,6.97
+California,True,146,7,3,3.56
+Utah,True,134,6,1,6.1
+Washington,True,111,2,0,6.38
+Colorado,True,103,11,6,3.83
+Arizona,True,101,4,2,3.42
+Oregon,True,98,5,0,3.89
+Kansas,False,93,0,0,4.37
+Wisconsin,False,75,0,0,4.43
+Minnesota,False,67,0,0,2.98
+Indiana,False,65,0,0,6.89
+Oklahoma,False,64,2,2,3.54
+Mississippi,False,64,0,0,5.17
+New Mexico,True,58,1,0,1.84
+Montana,True,56,7,4,1.48
+Ohio,False,53,0,0,4.57
+Illinois,False,48,0,0,3.2
+Florida,False,47,0,0,3.2
+Alabama,False,35,0,0,2.62
+West Virginia,False,34,2,2,5.42
+Iowa,False,34,0,0,2.34
+South Dakota,False,33,1,0,1.66
+Arkansas,False,31,1,0,2.25
+Alaska,False,27,1,0,0.18
+Pennsylvania,False,25,0,0,2.09
+Nebraska,False,25,0,0,1.24
+Idaho,True,24,2,0,1.11
+Louisiana,False,23,0,0,1.92
+Wyoming,True,22,1,1,0.87
+North Dakota,False,21,0,0,1.15
+Michigan,False,21,0,0,0.84
+Georgia,False,20,0,0,1.31
+Tennessee,False,17,0,0,1.56
+South Carolina,False,16,0,0,2.0
+New Jersey,False,15,0,0,7.63
+Kentucky,False,12,1,0,1.15
+Massachusetts,False,10,0,0,4.73
+North Carolina,False,8,1,1,0.63
+Maryland,False,8,0,0,3.14
+Hawaii,False,7,0,0,4.15
+Connecticut,False,6,0,0,4.72
+Delaware,False,6,0,0,11.6
+New York,False,6,0,0,0.44
+Maine,False,3,0,0,0.36
+Virginia,False,3,0,0,0.29
+New Hampshire,False,1,0,0,0.41

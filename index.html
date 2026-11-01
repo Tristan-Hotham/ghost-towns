@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ghost Towns of the World</title>
+<meta name="description" content="A map of 5,448 abandoned settlements in open data, coloured by why they were abandoned: mining, war, disaster, reservoirs, nuclear accidents, decline and the deserted villages of medieval England.">
+<meta property="og:title" content="Ghost towns of the world: where places were abandoned, and why">
+<meta property="og:description" content="3,374 ghost towns in Wikidata, 80% of them in the United States, and only 5% say why. England's 2,074 deserted medieval villages make up 38% of the map.">
+<meta property="og:image" content="https://maps.tristanhotham.com/ghost-towns/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/ghost-towns/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Old paper, faded ink, one colour per reason a place emptied. */
+:root{
+  --bg:#F6F3EC; --panel:#ECE7DC; --fg:#1F1C19; --muted:#6A645C; --rule:#E2DCD0; --card:#FCFBF7; --border:#CFC7B8;
+  --hot:#B8322A; --cool:#2B4C6F; --sea:#E3EAEC;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15130F; --panel:#211E19; --fg:#ECE7DD; --muted:#A79F93; --rule:#2E2A24; --card:#1B1814; --border:#3D372F;
+  --hot:#E0685C; --cool:#8DB0D6; --sea:#141A1D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15130F; --panel:#211E19; --fg:#ECE7DD; --muted:#A79F93; --rule:#2E2A24; --card:#1B1814; --border:#3D372F;
+  --hot:#E0685C; --cool:#8DB0D6; --sea:#141A1D; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--fg);color:var(--bg);padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .a{color:var(--muted)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:56ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.mu{color:var(--muted)} .stats b.h{color:var(--hot)} .stats b.dm{color:#C04F92}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:290px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.btn[aria-pressed="false"] .dot{opacity:.35}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+select.sel{font:500 12px var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px;min-height:36px}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 12px 10px;font:400 13px/1.45 var(--mono);max-height:640px;overflow:auto}
+@media (max-width:900px){.side{max-height:none}}
+.side h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.side h4:first-child{margin-top:2px}
+.side .big{font:800 24px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.side td{padding:4px 4px 4px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.side td.num{text-align:right;white-space:nowrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.go{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+.back{font:400 12px var(--mono);background:none;border:0;color:var(--muted);padding:0;cursor:pointer;text-decoration:underline;margin-bottom:6px}
+.lmap{height:620px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:600px){.lmap{height:min(64vh,470px)}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.leaflet-popup-content{font:400 12.5px/1.45 var(--mono);margin:10px 12px;max-width:290px}
+.leaflet-popup-content b.t{font:800 17px/1.15 var(--display);display:block;margin-bottom:3px}
+.leaflet-popup-content .chip{display:inline-block;font:500 11px/1 var(--mono);padding:4px 7px;border-radius:999px;color:#fff;margin:3px 0 6px}
+.leaflet-popup-content .q{color:var(--muted);font-style:italic}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--fg)}
+.lyrBtn{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:8px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:260px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:min(70vh,520px);overflow:auto}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel select{font:400 12px var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:2px;padding:2px 4px;width:100%}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .sub span{flex:0 0 58px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.mapnote{background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--border);border-radius:3px;padding:6px 9px;font:400 12px/1.35 var(--mono);max-width:min(300px,62vw);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mapnote b{font:900 20px/1 var(--display);display:block;margin-bottom:2px}
+@media (max-width:600px){.mapnote{display:none}}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px;align-items:center}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.legend i.ring{background:transparent;border:2px solid var(--fg)}
+.legend i.hol{background:transparent;border:1.5px solid var(--muted)}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+@media (max-width:760px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-left:8px solid var(--c,var(--hot));padding:10px 12px;font:400 12.5px/1.45 var(--mono);cursor:pointer}
+.card b{font:600 17px/1.2 var(--display);display:block;margin-bottom:2px}
+.card .w{color:var(--muted)}
+table.rank{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--mono);margin:8px 0 18px}
+table.rank th{font:500 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:2px solid var(--fg);padding:6px 6px 6px 0}
+table.rank td{border-bottom:1px solid var(--rule);padding:6px 6px 6px 0;vertical-align:top}
+table.rank td.num,table.rank th.num{text-align:right;white-space:nowrap}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.rules{font:400 12.5px/1.5 var(--mono)}
+.rules td{vertical-align:top;padding:5px 8px 5px 0;border-bottom:1px solid var(--rule)}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>History and places</span><span>World, 2026</span></div>
+<header class="hero">
+  <h1>Ghost towns <span class="a">of the world</span></h1>
+  <svg class="mark" viewBox="0 0 120 140" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">Mining camps that ran out of ore, villages drowned by reservoirs, towns emptied by war, volcanoes and Chernobyl, and thousands of English villages that faded away in the Middle Ages. Here are the abandoned places that open data knows about, coloured by why they were left, and an honest look at how little the record says.</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Data: Wikidata; Beresford's Lost Villages (University of Hull); English Wikipedia; Natural Earth</div>
+
+<div class="stats">
+  <div><b>5,448</b><span>abandoned settlements on the map, plus 4,249 ancient sites</span></div>
+  <div><b class="mu">80%</b><span>of Wikidata's 3,374 ghost towns are in the United States</span></div>
+  <div><b class="dm">38%</b><span>of the map is England's 2,074 deserted medieval villages</span></div>
+  <div><b class="h">5%</b><span>of Wikidata's ghost towns say why they were abandoned</span></div>
+</div>
+
+<p class="lede">A ghost town, in the words of the historian T. Lindsey Baker, is "a town for which the reason for being no longer exists". The reasons are some of the great forces of history: a seam of silver runs out, a railway passes by, a dam floods the valley, an army arrives, the ground shakes, a reactor explodes, or, slowly, the young leave and do not come back. I wanted to map them all and colour each place by why it emptied.</p>
+<p>The best open list of such places is Wikidata, the structured database behind Wikipedia. It holds 3,374 items with a position that are classed as a ghost town, an abandoned village or a deserted medieval village. To them I added England's 2,074 deserted medieval villages and hamlets from Maurice Beresford's gazetteer, which I mapped in an earlier study, and I read Wikipedia's 'List of ghost towns by country' (492 places) and its article on ghost towns for the reasons. What came out is two maps at once: a map of abandonment, and a map of who has written it down.</p>
+
+<h2><span class="n">01 · The map</span>Every abandoned place, coloured by why</h2>
+<div class="bleed" id="atlas">
+<div class="controls"><div class="scrollrow" id="reasonRow"><span class="ctl-l">Why</span></div></div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Search a place, country or US state" aria-label="Search a place, country or US state" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+  <label class="ctl-l" for="conf">Reason</label>
+  <select class="sel" id="conf" aria-label="Which reasons to show"><option value="3">any, including not recorded</option><option value="2">recorded (any confidence)</option><option value="1">high or medium confidence</option><option value="0">high confidence only</option></select>
+</div>
+<div class="controls"><div class="scrollrow" id="focusRow"><span class="ctl-l">Zoom to</span></div></div>
+<div class="mapgrid">
+  <div><div id="map" class="lmap" role="application" aria-label="Map of abandoned settlements coloured by reason"></div>
+    <div class="legend" id="legend"></div></div>
+  <div class="side" id="side" aria-live="polite"></div>
+</div>
+<p class="src">Points: Wikidata (CC0); England's deserted medieval villages: Beresford's Lost Villages, University of Hull (CC BY-NC-SA 4.0); reasons and hand-placed places: English Wikipedia (CC BY-SA 4.0). Tap or click a point. Ancient cities and sites are a separate layer, off at first: open Map layers.</p>
+</div>
+
+<h2><span class="n">02 · Where the record is</span>Two countries make most of the map</h2>
+<p>The first thing the map shows is not where places were abandoned but where people have catalogued them. 2,700 of Wikidata's 3,374 ghost towns, 80%, are in the United States, and 91% of those carry a one-line description of the form "ghost town in such-and-such county", the mark of entries added in bulk. Canada follows with 265, 141 of them in Newfoundland and Labrador, then Greece (101) and Australia (58). 41 of the 53 countries have fewer than ten. Wikidata holds 8 ghost towns in all of Africa, 17 in Asia and 9 in South America.</p>
+<div class="figure"><p class="fig-h">Abandoned settlements by country, coloured by reason</p><p class="fig-sub">Wikidata ghost towns and abandoned villages, with England's deserted medieval villages from Beresford's gazetteer as a row of their own. Grey: reason not recorded. Hover a bar.</p><div class="chart" id="ctyChart"></div></div>
+<p>England is the other giant, for a different reason. Historians have studied its lost medieval villages for seventy years, and Beresford and Hurst's gazetteer lists 2,074 deserted villages and hamlets. Add them and England makes up 38% of the abandoned settlements on the map; the United States and England together make up 88%. Every other country in the world shares the rest.</p>
+<p>Two more things shape the data. The query that fetched these items also returned 2,456 Mexican municipalities, which are living places that reach the 'abandoned village' class through a faulty link in Wikidata's class tree; I left them out, with 42 other living towns, castles and museums. And it returned 4,249 ancient cities and archaeological sites, from Greek poleis to Roman towns. They are abandoned too, but they are a different kind of record (52% of them are in Turkey and Greece, from a large import of classical places), so they sit in their own layer and out of the counts.</p>
+
+<h2><span class="n">03 · Why they were abandoned</span>Mining first, then war and disaster</h2>
+<p>Wikidata rarely says why a place emptied. Only 165 of its 3,374 ghost towns (5%) get a reason from my rules, and 61 of those rest only on a mining word in the name, such as Gold, Silver, Copper or Galena. Wikipedia's 'List of ghost towns by country' is much more talkative: 300 of its 492 places (61%) come with a reason in the text. Mining and resource booms lead (81), then war and military use (55) and natural disasters (54), economic decline and depopulation (50), reservoirs (27) and nuclear accidents (24).</p>
+<div class="figure"><p class="fig-h">Reasons in Wikipedia's list, by continent</p><p class="fig-sub">Share of the list's places by the reason its text gives. The United States and Canada have separate lists on Wikipedia, so North America here means Mexico, Central America, the Caribbean and Greenland. Hover a bar.</p><div class="chart" id="contChart"></div></div>
+<p>Each continent has its own story. In Oceania, 41 of 69 places are old mining towns, most of them Australian gold, copper and coal towns (33 of 51 in Australia). Africa's list is led by mining too (11 of 29), from the diamond towns of the Namib to South Africa's old mining camps. Europe's is the most varied: war (33 places), economic decline, disasters, the Chernobyl zone (23) and reservoirs (16). Mexico's entries are split between towns drowned by reservoirs (8) and old mining towns (8).</p>
+<div class="cards" id="exCards"></div>
+
+<h2><span class="n">04 · The American West</span>Boom and bust, as far as the data can tell</h2>
+<p>The picture of a ghost town most people carry is a wooden main street in Nevada or Colorado, built for a mine and left when the ore ran out. The data agree, up to a point. 1,053 of Wikidata's American ghost towns (39%) are in the 11 western states, with Nevada (200) the busiest of them. 65 of the western towns are tied to mining, against 14 in the rest of the country: 6.2% against 0.9%.</p>
+<div class="figure"><p class="fig-h">Wikidata ghost towns by US state</p><p class="fig-sub">The 20 states with most. Dark bars: the 11 western states. Amber: tied to mining. Click a bar to see the state on the map.</p><div class="chart" id="usChart"></div></div>
+<p>But look at the size of that "tied to mining" share. Only 18 western towns have mining in their description, class or a Wikipedia text; the other 47 are towns like Galena, Quartz Mountain or Borax, whose names give them away. Bodie and Rhyolite, two of the most famous mining ghost towns of all, have no reason recorded in Wikidata. And the two states with most ghost towns are not western at all: Texas (335) and Missouri (289), where the record gives almost no reasons. Per square kilometre, the West (3.4 per 10,000 km²) has about as many as the rest of the country (3.3). The mining West is real, but in this data it is mostly an inference from names.</p>
+
+<h2><span class="n">05 · England</span>Thousands of villages that faded in the Middle Ages</h2>
+<p>England's lost villages are a different kind of ghost town: no saloon, no headframe, often nothing but bumps in a field where the houses stood and the hollow way that was the street. Beresford's gazetteer, which I mapped in <a href="https://tristan-hotham.github.io/lost-villages/">The Villages That Vanished</a>, lists 2,074 deserted villages and hamlets in 37 historic counties. Yorkshire has 358, Lincolnshire 220 and Northumberland 165: 36% of the total in three counties.</p>
+<div class="figure"><p class="fig-h">When England's villages were deserted</p><p class="fig-sub">Presumed date of desertion for the 270 sites with a usable date in the gazetteer, by period. Hover a bar.</p><div class="chart" id="engChart"></div></div>
+<p>The Black Death of 1348 is often blamed, and plague did empty some villages. But of the 270 sites with a usable date, only 17% fall in the century after it, while 59% fall between 1450 and 1699, when landlords turned arable land into sheep pasture and enclosed the open fields. In the written accounts, enclosure or conversion to pasture is mentioned 63 times, emparking (clearing a village for a landscaped park) 46 times, and plague 32 times. In this study all of them count as "deserted medieval village or plague": the gazetteer gives a period and a type, not a single cause.</p>
+
+<h2><span class="n">06 · Soviet and after</span>Chernobyl, the Arctic and the war in Ukraine</h2>
+<p>The 15 former Soviet republics hold 62 ghost towns in Wikidata, 32 of them in Russia and 14 in Belarus, and 30 of the 62 have no English name at all. Only 10 have a reason. Wikipedia's list does better: 82 places in 12 of the republics, with three stories standing out.</p>
+<div class="cards" id="psCards"></div>
+<p>The first is Chernobyl. 23 of the list's places in Ukraine and Belarus were evacuated after the reactor exploded in 1986, from Pripyat itself to small villages now inside the exclusion zones. The second is the Soviet north and its resource towns: mining towns such as Kadykchan in Magadan Oblast and Khalmer-Yu in the Komi Republic, where the mines were shut and the settlement wound up by 1995, Butugychag, a Gulag camp where prisoners mined uranium, and Pyramiden on Svalbard. The third is recent: 7 Ukrainian towns emptied by fighting since the Russian invasion of 2022, such as Marinka, Soledar and Popasna. And then there is the quiet loss of rural Russia: 10 of the list's Russian entries are depopulated or abandoned villages in Yaroslavl Oblast alone, and the old town of Mologa lies under the Rybinsk Reservoir.</p>
+<div class="figure"><p class="fig-h">Post-Soviet places in Wikipedia's list, by reason</p><p class="fig-sub">82 places in the former Soviet republics. Hover a bar.</p><div class="chart" id="psChart"></div></div>
+
+<h2><span class="n">07 · When</span>Mostly the twentieth century, where we know</h2>
+<p>Dates are scarcer still. Only 46 of Wikidata's ghost towns have a date when they were dissolved. Wikipedia's list gives a year of abandonment, or a century, for 156 places, and 85% of those fall after 1900. The busiest decades are the 2010s (19 places), the 1980s, the decade of Chernobyl (17), and the 1950s (16), when reservoirs and mine closures emptied many places: the median year for reservoirs is 1951 and for mining towns 1953. England's dated deserted villages, by contrast, cluster around 1550.</p>
+<div class="figure"><p class="fig-h">When places were abandoned</p><p class="fig-sub">Wikipedia list years and Wikidata dissolution dates by decade since 1840, coloured by reason. Switch to see centuries, with England's dated deserted villages. Hover a bar.</p>
+<div class="controls"><div class="scrollrow" id="tlMode"><span class="ctl-l">By</span><button class="btn" data-m="d" aria-pressed="true">Decade, since 1840</button><button class="btn" data-m="c" aria-pressed="false">Century, since 1000</button></div></div>
+<div class="chart" id="tlChart"></div></div>
+<p class="pull">80% of Wikidata's ghost towns are American, and only 5% say why they died.</p>
+
+<h2><span class="n">08 · How I did this</span>Methods and caveats</h2>
+<p><b>Places.</b> I took every Wikidata item with coordinates that is an instance of ghost town, abandoned village or deserted medieval village, or a subclass of them (10,217 items; 95 more had no usable position). An item is a ghost town here if one of its classes is in the ghost town family (ghost town, abandoned village, deserted medieval village, abandoned hamlet, former village, mining community and a few more), or if it is a 'former settlement' with no ancient or archaeological class. Ancient cities and archaeological sites go to their own layer. Mexican municipalities and other living places are left out. Country, continent and US state come from Natural Earth by the point's position. England's deserted medieval villages and hamlets (2,000 villages and 74 hamlets) come from my earlier study; shrunken, shifted and doubtful sites are left out, and 1 Wikidata item that duplicated one of them was dropped.</p>
+<p><b>Reasons.</b> Each place gets one main reason from keyword rules, read in this order: nuclear, war, disaster, reservoir, mining, medieval, economic. The rules search the place's entry in Wikipedia's list (including any sentence introducing its group, such as "After the Chernobyl nuclear disaster in 1986, hundreds of settlements within the exclusion zone were evacuated"), a sentence in Wikipedia's 'Ghost town' article that links to it, and its Wikidata description. Places within 45 km of the Chernobyl plant or 30 km of Fukushima Daiichi count as nuclear. 45 list entries and 29 article sentences were matched to Wikidata items by name and country. Confidence is high when the reason is written in words or comes from a zone, medium when it follows from a Wikidata class (such as 'mining community'), and low when it comes from a mining word in the name. Keyword rules make mistakes: a mining town later flooded by a reservoir counts as a reservoir, and a place "evacuated for an artillery range" counts as war or military use.</p>
+<details><summary>The rules in full</summary><table class="rules" id="rulesTable"></table></details>
+<p><b>Hand-placed places.</b> Most of Wikipedia's list, including Pripyat, Oradour-sur-Glane, Hashima and Tyneham, is missing from the Wikidata extract because Wikidata files them as towns or villages rather than ghost towns, and the list gives no coordinates. So that the map shows them, I placed 44 well-known ones by hand at approximate positions (to within a few kilometres). They are ringed on the map and are not counted in any Wikidata total.</p>
+<p><b>Dates.</b> A list entry's year is the first year or century after a word such as abandoned, evacuated, flooded or destroyed; centuries count as their middle year. England's dates are the gazetteer's presumed dates of depopulation, at the middle of each range.</p>
+<div class="note"><h3>What this cannot say</h3><p>This is a map of what has been recorded, not of everywhere that was abandoned. The United States and England dominate because of bulk imports and decades of scholarship, not because other countries lost fewer places; Africa, Asia and South America are nearly blank. Wikidata almost never records why a place emptied, so most points are grey, and the mining share in the American West rests mostly on place names. Wikipedia's list is a selection of notable places, not a sample. Reasons come from simple word rules, which can be fooled. Some places in the data are not empty at all: a few still have small populations, and the definition of a ghost town is itself argued over.</p></div>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>Wikidata (https://www.wikidata.org/), queried through QLever in 2026. CC0.</li>
+<li>Beresford's Lost Villages, University of Hull (https://dmv.wordpress.hull.ac.uk/), from M. Beresford and J. Hurst's 1968 gazetteer, as cleaned for The Villages That Vanished (https://github.com/Tristan-Hotham/lost-villages). CC BY-NC-SA 4.0.</li>
+<li>English Wikipedia, 'List of ghost towns by country' and 'Ghost town', 2026. CC BY-SA 4.0.</li>
+<li>Natural Earth countries and states and provinces (public domain).</li>
+<li>Base map tiles © Esri.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23857616">Read the paper</a><a href="https://github.com/Tristan-Hotham/ghost-towns">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/ghost-towns/">Blog post</a><a href="https://tristan-hotham.github.io/lost-villages/">The Villages That Vanished</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Ghost towns of the world: where places were abandoned, and why, in Wikidata, Wikipedia and England's deserted medieval villages. Zenodo. <a href="https://doi.org/10.5281/zenodo.23857616">https://doi.org/10.5281/zenodo.23857616</a></p>
+<p>Licence: text and figures CC BY-NC-SA 4.0 (they include England's deserted villages, CC BY-NC-SA); data files as listed in the repository; code MIT. Blog post: <a href="https://blog.tristanhotham.com/2026/10/31/ghost-towns/">blog.tristanhotham.com</a>.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const R = {"raw_rows":19444,"raw_items":10217,"n_nocoord":95,"n_ghost":3374,"n_ancient":4249,"n_dropped":2498,"n_mexico":2456,"n_dropped_other":42,"n_dup":1,"n_dmv":2074,"n_dmv_dmv":2000,"n_dmh":74,"n_map":5448,"n_hand":44,"n_wiki":492,"n_wiki_notes":6,"n_wiki_matched":45,"n_article_matched":29,"n_ghost_nolabel":93,"n_points_total":9741,"n_countries_ghost":53,"us_n":2700,"us_share_wd":0.8002371072910492,"ca_n":265,"gr_n":101,"au_n":58,"uk_wd_n":12,"dmv_share_map":0.38069016152716595,"us_dmv_share_map":0.8762848751835536,"top_countries":[{"country":"United States","n":2700},{"country":"Canada","n":265},{"country":"Greece","n":101},{"country":"Australia","n":58},{"country":"Czech Republic","n":39},{"country":"Russia","n":32},{"country":"Italy","n":25},{"country":"Sweden","n":24},{"country":"Belarus","n":14},{"country":"United Kingdom","n":12},{"country":"Spain","n":12},{"country":"New Zealand","n":10},{"country":"Slovakia","n":8},{"country":"Ukraine","n":7},{"country":"Chile","n":5}],"n_countries_1to9":41,"africa_n":8,"asia_n":17,"sam_n":9,"afasam":34,"anc_top":[{"country":"Turkey","n":1193},{"country":"Greece","n":1005},{"country":"Italy","n":373},{"country":"Spain","n":300},{"country":"France","n":223},{"country":"Romania","n":128}],"anc_tr_gr_share":0.5172981878088962,"reasons":[{"key":"nuclear","label":"Nuclear","full":"Nuclear accident zone (Chernobyl, Fukushima)","colour":"#7FA80E"},{"key":"war","label":"War","full":"War, conflict or military use","colour":"#B8322A"},{"key":"disaster","label":"Disaster","full":"Natural disaster, erosion or contamination","colour":"#2B78B4"},{"key":"reservoir","label":"Reservoir","full":"Flooded by a reservoir or dam","colour":"#16A2A6"},{"key":"mining","label":"Mining","full":"Mining or resource boomtown","colour":"#D88A12"},{"key":"medieval","label":"Medieval","full":"Deserted medieval village or plague","colour":"#C04F92"},{"key":"economic","label":"Decline","full":"Economic decline, depopulation or relocation","colour":"#6D55A3"},{"key":"unknown","label":"Unknown","full":"Reason not recorded","colour":"#9AA0A4"}],"wd_reason":{"nuclear":3,"war":4,"disaster":9,"reservoir":7,"mining":114,"medieval":5,"economic":23,"unknown":3209},"wd_known":165,"wd_known_share":0.04890337877889745,"wd_conf":{"high":88,"medium":16,"low":61,"none":3209},"wd_known_hm":104,"wd_mining_low":61,"wd_from_list":32,"wd_from_article":16,"wd_from_desc":37,"wd_from_zone":3,"wd_from_class":16,"anc_known":34,"wiki_reason":{"nuclear":24,"war":55,"disaster":54,"reservoir":27,"mining":81,"medieval":9,"economic":50,"unknown":192},"wiki_known":300,"wiki_known_share":0.6097560975609756,"wiki_reason_share":{"nuclear":0.08,"war":0.18333333333333332,"disaster":0.18,"reservoir":0.09,"mining":0.27,"medieval":0.03,"economic":0.16666666666666666},"wiki_top_reason":"mining","wiki_rank":["mining","war","disaster","economic","reservoir","nuclear","medieval"],"wiki_from_group":40,"wiki_countries":90,"wiki_by_cont":[{"continent":"Europe","label":"Europe","n":242,"known":137,"by":{"nuclear":23,"war":33,"disaster":26,"reservoir":16,"mining":6,"medieval":6,"economic":27,"unknown":105},"top":"war","top_n":33},{"continent":"Asia","label":"Asia","n":89,"known":45,"by":{"nuclear":1,"war":16,"disaster":7,"reservoir":0,"mining":9,"medieval":2,"economic":10,"unknown":44},"top":"war","top_n":16},{"continent":"Africa","label":"Africa","n":29,"known":20,"by":{"nuclear":0,"war":3,"disaster":2,"reservoir":0,"mining":11,"medieval":1,"economic":3,"unknown":9},"top":"mining","top_n":11},{"continent":"North America","label":"North America","n":29,"known":24,"by":{"nuclear":0,"war":0,"disaster":6,"reservoir":8,"mining":8,"medieval":0,"economic":2,"unknown":5},"top":"reservoir","top_n":8},{"continent":"South America","label":"South America","n":27,"known":16,"by":{"nuclear":0,"war":1,"disaster":6,"reservoir":1,"mining":6,"medieval":0,"economic":2,"unknown":11},"top":"disaster","top_n":6},{"continent":"Oceania","label":"Oceania","n":69,"known":58,"by":{"nuclear":0,"war":2,"disaster":7,"reservoir":2,"mining":41,"medieval":0,"economic":6,"unknown":11},"top":"mining","top_n":41},{"continent":"Antarctica and sub-Antarctic islands","label":"Antarctica","n":7,"known":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":7},"top":null,"top_n":0}],"wiki_oc_mining":41,"wiki_oc_n":69,"wiki_eu_n":242,"wiki_eu_war":33,"wiki_eu_res":16,"wiki_eu_nuc":23,"wiki_af_mining":11,"wiki_af_n":29,"wiki_mx_res":8,"wiki_mx_mining":8,"wiki_mx_n":23,"wiki_uk_n":38,"wiki_uk_war":9,"wiki_uk_res":6,"wiki_uk_dis":5,"wiki_au_n":51,"wiki_au_mining":33,"wiki_ua_war":7,"wiki_ua_nuc":14,"by_country_top":[{"country":"United States","n":2700,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":4,"reservoir":6,"mining":79,"medieval":0,"economic":7,"unknown":2604}},{"country":"Canada","n":265,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":10,"medieval":0,"economic":1,"unknown":254}},{"country":"Greece","n":101,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":100}},{"country":"Australia","n":58,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":1,"mining":15,"medieval":0,"economic":4,"unknown":38}},{"country":"Czech Republic","n":39,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":38}},{"country":"Russia","n":32,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":4,"unknown":27}},{"country":"Italy","n":25,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":2,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":22}},{"country":"Sweden","n":24,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":1,"unknown":23}},{"country":"Belarus","n":14,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":14}},{"country":"United Kingdom","n":12,"dmv":2074,"by":{"nuclear":0,"war":1,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":3,"unknown":8}},{"country":"Spain","n":12,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":11}},{"country":"New Zealand","n":10,"dmv":0,"by":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":4,"medieval":0,"economic":0,"unknown":6}}],"us_states_n":48,"us_top_states":[{"state":"Texas","n":335,"west":false,"mining":5},{"state":"Missouri","n":289,"west":false,"mining":0},{"state":"Nevada","n":200,"west":true,"mining":19},{"state":"California","n":146,"west":true,"mining":7},{"state":"Utah","n":134,"west":true,"mining":6},{"state":"Washington","n":111,"west":true,"mining":2},{"state":"Colorado","n":103,"west":true,"mining":11},{"state":"Arizona","n":101,"west":true,"mining":4},{"state":"Oregon","n":98,"west":true,"mining":5},{"state":"Kansas","n":93,"west":false,"mining":0},{"state":"Wisconsin","n":75,"west":false,"mining":0},{"state":"Minnesota","n":67,"west":false,"mining":0}],"us_west_n":1053,"us_west_share":0.39,"us_west_mining":65,"us_rest_mining":14,"us_west_mining_share":0.06172839506172839,"us_rest_mining_share":0.008500303582270795,"us_west_mining_hm":18,"us_west_mining_low":47,"us_west_known":70,"us_west_mining_of_known":0.9285714285714286,"us_rest_known":26,"ca_nl":141,"us_desc_formula":2458,"us_desc_formula_share":0.9103703703703704,"us_tx_mo":624,"us_tx":335,"us_mo":289,"us_nv":200,"bodie_ca_reason":["unknown"],"rhyolite_reason":["unknown"],"west_low_names":["Argenta","Bodie Mine","Bonanza","Bonanza City","Borax","Bullfrog","Bullion","Carbonate","Chloride City","Coal City","Cobre","Copper","Copper Creek","El Dorado City","Galena","Garnet","Gold Acres","Gold Center","Gold Creek","Gold Point","Golden","La Plata","Mary Murphy Mine","Mineral Hill","Mount Ophir","New Idria Mercury Mine","Oro City","Placer","Quartz Mountain","Silver Bow","Silver City","Silver Creek","Silver Lake","Silver Reef","Silver Zone","Telluride","Tungsten","Vulture Mine","Willow Creek Mine"],"us_west_states":[{"state":"Nevada","n":200,"mining":19,"dens":6.97},{"state":"California","n":146,"mining":7,"dens":3.56},{"state":"Utah","n":134,"mining":6,"dens":6.1},{"state":"Washington","n":111,"mining":2,"dens":6.38},{"state":"Colorado","n":103,"mining":11,"dens":3.83},{"state":"Arizona","n":101,"mining":4,"dens":3.42},{"state":"Oregon","n":98,"mining":5,"dens":3.89},{"state":"New Mexico","n":58,"mining":1,"dens":1.84},{"state":"Montana","n":56,"mining":7,"dens":1.48},{"state":"Idaho","n":24,"mining":2,"dens":1.11},{"state":"Wyoming","n":22,"mining":1,"dens":0.87}],"us_west_dens":3.4286672250704155,"us_rest_dens":3.311513759362272,"us_dens_top":["Missouri","Delaware","New Jersey"],"us_names":{"bodie":true,"rhyolite":true},"dmv_counties":[{"county":"Yorkshire","n":358},{"county":"Lincolnshire","n":220},{"county":"Northumberland","n":165},{"county":"Hampshire","n":135},{"county":"Warwickshire","n":127},{"county":"Norfolk","n":126},{"county":"Wiltshire","n":103},{"county":"Oxfordshire","n":99},{"county":"Northamptonshire","n":80},{"county":"Nottinghamshire","n":67}],"dmv_n_counties":37,"dmv_top3":743,"dmv_top3_share":0.35824493731919,"dmv_yorks":358,"dmv_lincs":220,"dmv_nland":165,"dmv_periods":[{"period":"Before 1348","n":20},{"period":"1348 to 1449","n":47},{"period":"1450 to 1549","n":62},{"period":"1550 to 1699","n":98},{"period":"1700 onwards","n":43}],"dmv_dated":270,"dmv_undated":1804,"dmv_full_record":392,"dmv_causes":{"enclosure_or_pasture":63,"plague":32,"emparking":46,"monastic_landholder":41,"sea_or_flooding":11},"dmv_with_desc_text":392,"dmv_mid":[1375,1630,1600,1500,1750,1650,1650,1650,1650,1575,1649,1799,1575,1575,1619,1575,1699,1549,1600,1550,1575,1525,1500,1649,1419,1400,1699,1400,1575,1400,1575,1575,1575,1575,1785,1375,1450,1250,1450,1350,1500,1850,1624,1740,1550,1450,1350,1500,1500,1380,1550,1450,1750,1650,1942,1350,1550,1500,1750,1375,1550,1850,1450,1600,1500,1400,1400,1350,1725,1530,1600,1710,1550,1550,1450,1420,1815,1450,1550,1450,1550,1650,1650,1650,1550,1500,1550,1550,1600,1550,1699,1575,1349,1449,1519,1579,1400,1149,1499,1469,1400,1700,1650,1505,1550,1550,1545,1800,1700,1555,1650,1575,1850,1850,1550,1575,1550,1520,1550,1550,1600,1400,1500,1550,1550,1550,1550,1700,1700,1525,1670,1560,1600,1600,1725,1650,1350,1500,1600,1510,1450,1385,1370,1750,1550,1750,1550,1450,1600,1550,1450,1565,1550,1550,1550,1750,1465,1700,1825,1400,1450,1550,1350,1380,1440,1760,1520,1510,1485,1650,1350,1460,1275,1360,1375,1450,1675,1475,1380,1380,1350,1475,1520,1360,1500,1425,1530,1790,1499,1564,1549,1469,1499,1449,1449,1599,1514,1479,1499,1519,1469,1499,1249,1399,1549,1499,1677,1434,1499,1650,1549,1469,1575,1349,1499,1500,1499,1449,1599,1399,1549,1674,1750,1750,1150,1870,1750,1750,1650,1650,1750,1550,1550,1362,1185,1350,1250,1550,1550,1700,1775,1700,1370,1550,1700,1700,1650,1650,1750,1550,1400,1625,1850,1375,1450,1350,1675,1200,1650,1650,1375,1685,1700,1420,1400,1475,1720,1500,1490,1700],"dmv_mid_median":1550,"dmv_1450_1699":0.5925925925925926,"dmv_plague_period":0.17407407407407408,"eng_wd_ghost":2,"dmv_vs_rest_world_wd":3.077151335311573,"ps_wd_n":62,"ps_wd_by_country":[{"country":"Russia","n":32},{"country":"Belarus","n":14},{"country":"Ukraine","n":7},{"country":"Kazakhstan","n":4},{"country":"Turkmenistan","n":1},{"country":"Lithuania","n":1},{"country":"Armenia","n":1},{"country":"Azerbaijan","n":1},{"country":"Latvia","n":1}],"ps_wd_reason":{"nuclear":3,"war":2,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":4,"unknown":52},"ps_wd_known":10,"ps_wd_nolabel":30,"ps_wiki_n":82,"ps_wiki_reason":{"nuclear":23,"war":12,"disaster":1,"reservoir":1,"mining":7,"medieval":1,"economic":7,"unknown":30},"ps_wiki_countries":12,"ps_wiki_soviet_word":7,"ps_wiki_by_country":[{"country":"Ukraine","n":21,"by":{"nuclear":14,"war":7}},{"country":"Russia","n":18,"by":{"mining":3,"disaster":1,"unknown":9,"economic":4,"reservoir":1}},{"country":"Tajikistan","n":15,"by":{"unknown":15}},{"country":"Belarus","n":9,"by":{"nuclear":9}},{"country":"Estonia","n":5,"by":{"unknown":3,"mining":2}},{"country":"Kyrgyzstan","n":4,"by":{"economic":1,"mining":2,"unknown":1}},{"country":"Georgia","n":3,"by":{"medieval":1,"war":2}},{"country":"Kazakhstan","n":2,"by":{"war":1,"economic":1}},{"country":"Latvia","n":2,"by":{"war":2}},{"country":"Azerbaijan","n":1,"by":{"unknown":1}},{"country":"Uzbekistan","n":1,"by":{"unknown":1}},{"country":"Lithuania","n":1,"by":{"economic":1}}],"soviet_word_outside":4,"chernobyl_wiki":23,"chernobyl_wd":3,"by_wd_n":14,"ru_wd_n":32,"ru_yaroslavl_wiki":10,"tj_n":15,"ua_2022_wiki":7,"wd_dated":46,"wd_dated_unknownval":1,"wd_dated_since1900":36,"wd_dated_min":1420,"wd_dated_max":2020,"wiki_dated":156,"wiki_dated_since1900":133,"wiki_dated_since1900_share":0.8525641025641025,"wiki_dated_since2000":33,"wiki_dated_pre1600":9,"wiki_dated_century":14,"wiki_peak_decades":[{"decade":2010,"n":19},{"decade":1980,"n":17},{"decade":1950,"n":16},{"decade":1990,"n":16}],"timeline_century":[{"century":1000,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"dmv":0},{"century":1100,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"dmv":3},{"century":1200,"wiki":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"dmv":5},{"century":1300,"wiki":{"nuclear":0,"war":0,"disaster":3,"reservoir":0,"mining":0,"medieval":2,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"dmv":30},{"century":1400,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1},"dmv":56},{"century":1500,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":1,"economic":0,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1},"dmv":89},{"century":1600,"wiki":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1},"dmv":44},{"century":1700,"wiki":{"nuclear":0,"war":1,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"dmv":33},{"century":1800,"wiki":{"nuclear":0,"war":0,"disaster":5,"reservoir":0,"mining":0,"medieval":0,"economic":4,"unknown":2},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":7},"dmv":9},{"century":1900,"wiki":{"nuclear":9,"war":12,"disaster":16,"reservoir":18,"mining":13,"medieval":1,"economic":18,"unknown":13},"wd":{"nuclear":0,"war":1,"disaster":2,"reservoir":4,"mining":3,"medieval":0,"economic":0,"unknown":23},"dmv":1},{"century":2000,"wiki":{"nuclear":0,"war":2,"disaster":7,"reservoir":2,"mining":1,"medieval":0,"economic":3,"unknown":18},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":3},"dmv":0}],"timeline_decade":[{"decade":1840,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":2,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0}},{"decade":1850,"wiki":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":2,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1860,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":3}},{"decade":1870,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1880,"wiki":{"nuclear":0,"war":0,"disaster":3,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1890,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1900,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":1,"medieval":0,"economic":1,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":1,"medieval":0,"economic":0,"unknown":0}},{"decade":1910,"wiki":{"nuclear":0,"war":1,"disaster":1,"reservoir":1,"mining":1,"medieval":0,"economic":1,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":2}},{"decade":1920,"wiki":{"nuclear":0,"war":1,"disaster":0,"reservoir":0,"mining":2,"medieval":0,"economic":0,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":2}},{"decade":1930,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":2,"mining":0,"medieval":0,"economic":3,"unknown":3},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":4,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1940,"wiki":{"nuclear":0,"war":0,"disaster":0,"reservoir":3,"mining":0,"medieval":0,"economic":2,"unknown":2},"wd":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":5}},{"decade":1950,"wiki":{"nuclear":0,"war":1,"disaster":1,"reservoir":6,"mining":4,"medieval":1,"economic":2,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":1,"medieval":0,"economic":0,"unknown":2}},{"decade":1960,"wiki":{"nuclear":0,"war":2,"disaster":3,"reservoir":2,"mining":2,"medieval":0,"economic":4,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}},{"decade":1970,"wiki":{"nuclear":0,"war":2,"disaster":3,"reservoir":3,"mining":0,"medieval":0,"economic":2,"unknown":1},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":7}},{"decade":1980,"wiki":{"nuclear":9,"war":1,"disaster":4,"reservoir":1,"mining":1,"medieval":0,"economic":1,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0}},{"decade":1990,"wiki":{"nuclear":0,"war":4,"disaster":4,"reservoir":0,"mining":2,"medieval":0,"economic":2,"unknown":4},"wd":{"nuclear":0,"war":1,"disaster":0,"reservoir":0,"mining":1,"medieval":0,"economic":0,"unknown":3}},{"decade":2000,"wiki":{"nuclear":0,"war":2,"disaster":2,"reservoir":0,"mining":0,"medieval":0,"economic":2,"unknown":6},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":2}},{"decade":2010,"wiki":{"nuclear":0,"war":0,"disaster":4,"reservoir":2,"mining":1,"medieval":0,"economic":0,"unknown":12},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":0}},{"decade":2020,"wiki":{"nuclear":0,"war":0,"disaster":1,"reservoir":0,"mining":0,"medieval":0,"economic":1,"unknown":0},"wd":{"nuclear":0,"war":0,"disaster":0,"reservoir":0,"mining":0,"medieval":0,"economic":0,"unknown":1}}],"wiki_war_dated":[1974,1992,2008,1997,2005,1767,1923,1989,1916,1975,1990,1965,1992,1964,1952],"wiki_res_dated_median":1951,"wiki_mining_dated_median":1953,"wiki_dis_dated_n":33,"examples":{"Plymouth":{"name":"Plymouth","country":"Montserrat","reason":"disaster"},"Craco":{"name":"Craco","country":"Italy","reason":"disaster"},"Kolmanskop":{"name":"Kolmanskop","country":"Namibia","reason":"mining"},"Centralia":{"name":"Centralia","country":"United States","reason":"disaster"},"Varosha":{"name":"Varosha","country":"Northern Cyprus","reason":"war"},"Times Beach":{"name":"Times Beach","country":"United States","reason":"disaster"},"Picher":{"name":"Picher","country":"United States","reason":"disaster"},"Bodie":{"name":"Bodie","country":"United States","reason":"unknown"},"Rhyolite":{"name":"Rhyolite","country":"United States","reason":"unknown"},"Oatman":{"name":"Oatman","country":"United States","reason":"mining"}},"hand_names":["Dhanushkodi","Hashima Island","Ōkuma","Kadykchan","Quneitra","Old Ayutthaya","Kayaköy","Döllersheim","Doel","Oradour-sur-Glane","Spinalonga","Great Blasket Island","Bussana Vecchia","Civita di Bagnoregio","Curon in South Tyrol","Poggioreale","Pyramiden","Vilarinho da Furna","Mologa","Belchite","Chernobyl","Pripyat","Marinka","Soledar","Popasna","Derwent","Dunwich","Hallsands","Mardale","Tide Mills","Imber","Tyneham","Mingulay","Capel Celyn","Real de Catorce","Gwalia","Silverton","Wittenoom","Te Wairoa","Villa Epecuén","Fordlândia","Chaitén","Sewell","Armero"],"hand_reason":{"nuclear":3,"war":11,"disaster":9,"reservoir":6,"mining":8,"medieval":0,"economic":7,"unknown":0},"n_points_page":9741};
+const RULES = [["nuclear","Nuclear (Chernobyl within 45 km, Fukushima within 30 km)","chernobyl|chornobyl|fukushima|nuclear (disaster|accident|plant|power)|radiation|radioactiv|exclusion zone|kyshtym|mayak"],["war","War","wars?|wartime|battle|bomb(ed|ing|ardment)|shell(ed|ing)|military|army|soldiers|troops|invasion|invaded|(military|enemy|foreign|german|soviet|israeli|turkish|armenian|japanese|nazi) occupation|occupied by|massacre|nazi|waffen|genocide|expelled|expulsion|deport|ethnic cleansing|conflict|insurgen|guerrilla|fighting|siege|artillery|firing range|training (area|ground|range|facility)|battle area|air ?base|naval base|military base|missile|radar|sacked|sack of|refugees?|front ?line|nakba|depopulated palestinian|population exchange|partition|airstrike|air raid|razed|annex|forced to flee|fled the|evacuated .{0,40}(war|fighting|army)|liberation"],["disaster","Disaster","earthquake|tsunami|volcan|erupt|lava|hurricane|cyclone|typhoon|tornado|landslide|mudslide|avalanche|wildfire|bushfire|fires?|burn(ed|t) down|coastal erosion|eroded|erosion|swept (away|into the sea)|washed (away|into the sea)|into the (north )?sea|sea level|rising sea|storm|sand ?dunes?|sandstorm|desertification|drought|subsidence|sinkhole|mine fire|underground fire|toxic|contaminat|dioxin|pollut|chemical|floods?|flooding|flash flood|disaster"],["reservoir","Reservoir","reservoir|dams?|hydro-?electric|hydro scheme|submerged|drowned|inundat|artificial lake|flooded (to|for|by|when|in order|so|under)|decant pond|tailings|under (the )?(water|lake)|lies (beneath|under)|beneath (the )?lake"],["mining","Mining","min(e|es|ing|ers?)|gold|gold ?rush|silver|copper|coal|colliery|tin|zinc|lead mine|quarr(y|ies|ying)|ores?|boom ?town|boom|rush|oil|petroleum|uranium|diamond|nickel|asbestos|phosphate|guano|whaling|lumber|logging|timber|sawmill|pulp mill|smelter|molybdenum|mercury|sulphur|sulfur|salt works|saltpetre|nitrate|potash|borax|bauxite"],["medieval","Medieval","medieval|middle ages|black death|plague|pestilence|deserted village .{0,30}(england|yorkshire)|enclosure|sheep pasture|converted to pasture|emparked|1[1-5]th century"],["economic","Decline","declin|depopulat|emigrat|railways?|railroads?|bypass|highway|closure|closed|factory|mills?|industr|econom|unemploy|clearances?|cleared|evicted|eviction|resettle|relocat|moved|abolished|liquidat|collective farm|kolkhoz|isolation|remote|last (permanent )?(residents?|inhabitants?)|population of (zero|0)|no permanent|uninhabited|airport|demolished (to|for|so)|make way|fishing (village|station)|company town|outcompeted|left for|harsh|lighthouse|underoccupied|speculat|commercial|weaken|colonial capital|capital (was )?moved|people left|youth left|aging|ageing|money shortage|poverty|big cities"],["unknown","From a Wikidata class (medium)","mining community: mining; pit village: mining; mining region: mining; depopulated Palestinian village: war; destroyed settlement: war; deserted medieval village: medieval; prisoner-of-war camp: war; military base: war; closed city: decline"],["mining","From the name (low)","gold, silver, copper, mine, lode, placer, bonanza, quartz, galena, nugget, coal and other mining words"]];
+const fmt = n => n == null || n === "" ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("click", hideTip);
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const small = () => innerWidth < 900;
+const RK = R.reasons.map(r => r.key), RS = {}; R.reasons.forEach(r => RS[r.key] = r);
+const col = k => k === "unknown" && isDark() ? "#6E7478" : RS[k].colour;
+const hit = (svg, x, y, w, h, html) => { const r = el("rect", { x, y, width: Math.max(1, w), height: h, fill: "transparent" }, svg); r.addEventListener("mousemove", e => showTip(html, e.clientX, e.clientY - 4)); r.addEventListener("mouseleave", hideTip); r.addEventListener("click", e => { e.stopPropagation(); showTip(html, e.clientX, e.clientY - 4); }); return r; };
+
+/* hero mark: a ruined gable, its window empty */
+(function () {
+  const g = document.getElementById("heroMark");
+  el("path", { d: "M14 132 V62 L60 20 L106 62 V132 Z", fill: "none", stroke: "#1F1C19", "stroke-width": 5, "stroke-linejoin": "round" }, g);
+  el("path", { d: "M78 132 V100 L96 86", fill: "none", stroke: "#B8322A", "stroke-width": 5 }, g);
+  el("rect", { x: 46, y: 58, width: 28, height: 34, fill: "#E3EAEC", stroke: "#1F1C19", "stroke-width": 4 }, g);
+  el("path", { d: "M106 62 L118 74 M14 62 L4 72", stroke: "#9AA0A4", "stroke-width": 4 }, g);
+  [["#D88A12", 26, 120], ["#16A2A6", 40, 120], ["#2B78B4", 54, 120], ["#C04F92", 26, 106]].forEach(([c, x, y]) => el("circle", { cx: x, cy: y, r: 4.5, fill: c }, g));
+})();
+
+/* ---------- generic stacked horizontal bars ---------- */
+function hbars(boxId, rows, opt = {}) {
+  resp(document.getElementById(boxId), (W, sm) => {
+    const box = document.getElementById(boxId); const rh = sm ? 22 : 24, gap = 7, lw = opt.lw ? opt.lw(sm) : (sm ? 112 : 160), m = { l: lw, r: opt.mr ? opt.mr(sm) : (sm ? 70 : 90), t: 4 };
+    const H = m.t + rows.length * (rh + gap) + 22; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+    const max = opt.share ? 1 : Math.max(...rows.map(r => r.n));
+    const x = v => m.l + (W - m.l - m.r) * v / max;
+    const ticks = opt.share ? [0, .25, .5, .75, 1] : opt.ticks;
+    (ticks || []).forEach(v => { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 18, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 4, opt.share ? Math.round(v * 100) + "%" : fmt(v), "lab s m", "middle"); });
+    rows.forEach((r, i) => {
+      const y0 = m.t + i * (rh + gap); let left = 0;
+      const segs = r.segs || RK.filter(k => r.by[k]).map(k => [k, r.by[k]]);
+      segs.forEach(([k, v, c]) => { const vv = opt.share ? v / r.n : v; el("rect", { x: x(left), y: y0, width: Math.max(.5, x(left + vv) - x(left)), height: rh, fill: c || col(k), opacity: k === "unknown" && opt.share ? .55 : 1 }, svg); left += vv; });
+      lbl(svg, m.l - 8, y0 + rh / 2 + 4, r.label, "lab" + (r.bold ? " b" : ""), "end");
+      lbl(svg, (opt.share ? x(1) : x(r.n)) + 6, y0 + rh / 2 + 4, r.tail ?? fmt(r.n), "lab s");
+      const html = `<b>${esc(r.label)}</b><br>${fmt(r.n)} ${opt.unit || "places"}<br>` + segs.filter(s => s[1]).map(([k, v]) => `${esc(s_lab(k))}: ${fmt(v)}`).join("<br>");
+      const h = hit(svg, 0, y0, W, rh, html); if (opt.click) { h.style.cursor = "pointer"; h.addEventListener("click", () => opt.click(r)); }
+    });
+  });
+}
+const s_lab = k => RS[k] ? RS[k].full : k;
+
+/* ---------- section charts ---------- */
+(function () {
+  const rows = R.by_country_top.map(c => ({ label: c.country, n: c.n, by: c.by }));
+  rows.splice(1, 0, { label: "England (Beresford)", n: R.n_dmv, by: { medieval: R.n_dmv }, bold: true });
+  hbars("ctyChart", rows.slice(0, 13), { ticks: [0, 1000, 2000] , click: r => focusCountry(r.label === "England (Beresford)" ? "United Kingdom" : r.label) });
+  hbars("contChart", R.wiki_by_cont.filter(b => b.n).map(b => ({ label: b.label, n: b.n, by: b.by, tail: b.n + " places" })), { share: true });
+  hbars("psChart", R.ps_wiki_by_country.map(c => ({ label: c.country, n: c.n, by: c.by })), { ticks: [0, 5, 10, 15, 20] });
+  hbars("engChart", R.dmv_periods.map(p => ({ label: p.period, n: p.n, segs: [["medieval", p.n]] })), { ticks: [0, 50, 100], unit: "dated sites" });
+})();
+fetch("data/us_states.json").then(r => r.json()).then(U => {
+  hbars("usChart", U.slice(0, 20).map(s => ({ label: s.state + (s.west ? " *" : ""), n: s.n, segs: [["mining", s.mining], ["other", s.n - s.mining, s.west ? "#8E8676" : "#C9C3B6"]], tail: s.mining ? `${s.n} (${s.mining} mining)` : String(s.n), state: s.state })),
+    { ticks: [0, 100, 200, 300], unit: "ghost towns", click: r => focusRegion(r.state), lw: sm => sm ? 104 : 130, mr: sm => sm ? 112 : 130 });
+}).catch(e => console.error(e));
+/* example cards */
+(function () {
+  const EX = [["Plymouth", "Montserrat's capital, buried by the Soufrière Hills volcano"], ["Kolmanskop", "a diamond town in the Namib desert"], ["Centralia", "a Pennsylvania coal town above a mine fire"],
+    ["Varosha", "a Cyprus resort fenced off since 1974"], ["Craco", "an Italian hill town left after a landslide"], ["Times Beach", "a Missouri town contaminated with dioxin"]];
+  document.getElementById("exCards").innerHTML = EX.map(([n, w]) => { const e = R.examples[n]; return `<div class="card" data-n="${esc(n)}" style="--c:${RS[e.reason].colour}"><b>${esc(n)}</b><span class="w">${esc(e.country)} · ${esc(RS[e.reason].label)}</span><br>${esc(w)}</div>`; }).join("");
+  document.querySelectorAll("#exCards .card").forEach(c => c.onclick = () => focusName(c.dataset.n));
+  const PS = [["Pripyat", "nuclear", `${R.chernobyl_wiki} places in Ukraine and Belarus in Wikipedia's list were evacuated after Chernobyl`], ["Kadykchan", "mining", "a former mining town in Magadan Oblast, in the far north-east"],
+    ["Soledar", "war", `${R.ua_2022_wiki} Ukrainian towns in the list emptied by fighting since 2022`]];
+  document.getElementById("psCards").innerHTML = PS.map(([n, k, w]) => `<div class="card" data-n="${esc(n)}" style="--c:${RS[k].colour}"><b>${esc(n)}</b><span class="w">${esc(RS[k].label)}</span><br>${esc(w)}</div>`).join("");
+  document.querySelectorAll("#psCards .card").forEach(c => c.onclick = () => focusName(c.dataset.n));
+  document.getElementById("rulesTable").innerHTML = RULES.map(r => `<tr><td><span class="sw" style="background:${RS[r[0]] ? RS[r[0]].colour : "#999"}"></span>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("");
+})();
+
+/* timeline */
+let tlMode = "d";
+document.querySelectorAll("#tlMode .btn").forEach(b => b.onclick = () => { tlMode = b.dataset.m; document.querySelectorAll("#tlMode .btn").forEach(x => x.setAttribute("aria-pressed", x === b)); redraws.forEach(f => f()); });
+resp(document.getElementById("tlChart"), (W, sm) => {
+  const box = document.getElementById("tlChart");
+  const T = tlMode === "d" ? R.timeline_decade.map(t => ({ k: t.decade + "s", segs: RK.map(r => [r, t.wiki[r] + t.wd[r]]) }))
+    : R.timeline_century.filter(t => t.century >= 1000 && t.century <= 2000).map(t => ({ k: t.century + "s", segs: [["dmv", t.dmv], ...RK.map(r => [r, t.wiki[r] + t.wd[r]])] }));
+  const H = sm ? 280 : 320, m = { l: 34, r: 8, t: 14, b: 42 }; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+  const max = Math.max(...T.map(t => t.segs.reduce((s, x) => s + x[1], 0))); const step = max > 60 ? 20 : 5; const top = Math.ceil(max / step) * step;
+  const bw = (W - m.l - m.r) / T.length, x = i => m.l + bw * i, y = v => H - m.b - (H - m.t - m.b) * v / top;
+  for (let v = 0; v <= top; v += step) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, m.l - 5, y(v) + 4, v, "lab s m", "end"); }
+  T.forEach((t, i) => {
+    let acc = 0;
+    t.segs.forEach(([k, v]) => { if (!v) return; el("rect", { x: x(i) + 1, y: y(acc + v), width: Math.max(1, bw - 2), height: y(acc) - y(acc + v), fill: k === "dmv" ? RS.medieval.colour : col(k), opacity: k === "dmv" ? .5 : 1 }, svg); acc += v; });
+    const every = tlMode === "d" ? (sm ? 3 : 2) : (sm ? 2 : 1);
+    if (i % every === 0) { const tx = lbl(svg, x(i) + bw / 2, H - m.b + 14, t.k, "lab s m", "middle"); }
+    hit(svg, x(i), m.t, bw, H - m.t - m.b, `<b>${t.k}</b><br>` + t.segs.filter(s => s[1]).map(([k, v]) => `${k === "dmv" ? "England's deserted villages" : esc(RS[k].label)}: ${v}`).join("<br>") || "none");
+  });
+  el("line", { x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), stroke: css("--fg") }, svg);
+});
+
+/* ---------- map ---------- */
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+const ESRI_ATT = 'Tiles &copy; Esri | Data: Wikidata, Beresford\'s Lost Villages (Univ. of Hull), Wikipedia';
+const LYDEF = { base: "plain", hills: false, hillK: 45, labels: true, labelK: 70, bounds: false, wd: true, dmv: true, hand: true, anc: false, zones: true, size: 1 };
+const LY = { ...LYDEF };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("ghost_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("ghost_layers", JSON.stringify(LY)); } catch (e) {} };
+const map = L.map("map", { minZoom: 1, maxZoom: 14, worldCopyJump: true, zoomSnap: .5 }).setView([30, 10], small() ? 1 : 2);
+["hills:250", "zones:380", "labels:430", "pts:450", "names:620"].forEach(s => { const [n, z] = s.split(":"); map.createPane(n); map.getPane(n).style.zIndex = z; });
+["hills", "labels", "names"].forEach(n => map.getPane(n).style.pointerEvents = "none");
+const canvas = L.canvas({ pane: "pts", padding: .3, tolerance: 5 });
+let base = null, hills = null, labels = null, bounds = null;
+function setTiles() {
+  [base, labels, hills, bounds].forEach(l => { if (l) map.removeLayer(l); });
+  const t = isDark() ? "Dark" : "Light";
+  const url = LY.base === "relief" ? ESRI + "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}" : LY.base === "topo" ? ESRI + "World_Topo_Map/MapServer/tile/{z}/{y}/{x}" : LY.base === "satellite" ? ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}" : `${ESRI}Canvas/World_${t}_Gray_Base/MapServer/tile/{z}/{y}/{x}`;
+  base = L.tileLayer(url, { maxZoom: 18, maxNativeZoom: LY.base === "relief" ? 13 : 16, attribution: ESRI_ATT }).addTo(map);
+  hills = L.tileLayer(ESRI + "Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", { maxZoom: 18, maxNativeZoom: 16, pane: "hills" });
+  labels = L.tileLayer(`${ESRI}Canvas/World_${t}_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 18, maxNativeZoom: 16, pane: "labels" });
+  bounds = L.tileLayer(ESRI + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", { maxZoom: 18, maxNativeZoom: 16, pane: "labels" });
+  applyLayers();
+}
+function applyLayers() {
+  if (!base) return;
+  if (LY.hills) { hills.addTo(map); hills.setOpacity(Math.min(1, .15 + LY.hillK / 120)); } else map.removeLayer(hills);
+  if (LY.labels) { labels.addTo(map); labels.setOpacity(LY.labelK / 100); } else map.removeLayer(labels);
+  if (LY.bounds) bounds.addTo(map); else map.removeLayer(bounds);
+  if (zoneLayer) { if (LY.zones) zoneLayer.addTo(map); else map.removeLayer(zoneLayer); }
+  restyle(); legend();
+}
+(function layerControl() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false">Map layers</button>
+<div class="lyrPanel" hidden>
+ <div class="row"><label style="font-weight:600">Base map</label><div class="sub"><select data-k="base" aria-label="Base map"><option value="plain">Plain grey</option><option value="topo">Topographic</option><option value="relief">Shaded relief</option><option value="satellite">Satellite</option></select></div></div>
+ <div class="row"><label><input type="checkbox" data-k="hills"> Hill shading</label><div class="sub"><span>strength</span><input type="range" data-k="hillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="labels"> Place names</label><div class="sub"><span>strength</span><input type="range" data-k="labelK" min="20" max="100" step="5" aria-label="Place name strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="bounds"> Borders and more places</label></div>
+ <div class="hd">Abandoned places</div>
+ <div class="row"><label><input type="checkbox" data-k="wd"> Wikidata ghost towns (${fmt(R.n_ghost)})</label></div>
+ <div class="row"><label><input type="checkbox" data-k="dmv"> England's deserted villages (${fmt(R.n_dmv)})</label></div>
+ <div class="row"><label><input type="checkbox" data-k="hand"> Wikipedia list, placed by hand (${R.n_hand})</label></div>
+ <div class="row"><label><input type="checkbox" data-k="anc"> Ancient cities and sites (${fmt(R.n_ancient)})</label></div>
+ <div class="row"><label><input type="checkbox" data-k="zones"> Nuclear exclusion zones</label></div>
+ <div class="row"><div class="sub"><span>point size</span><input type="range" data-k="size" min=".6" max="2" step=".1" aria-label="Point size"></div></div>
+ <button class="reset">Reset layers</button>
+</div>`;
+    return d; } });
+  map.addControl(new Ctl());
+  const box = map.getContainer(), btn = box.querySelector(".lyrBtn"), pan = box.querySelector(".lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => pan.querySelectorAll("[data-k]").forEach(i => { const k = i.dataset.k; if (i.type === "checkbox") i.checked = LY[k]; else i.value = LY[k]; });
+  pan.querySelectorAll("[data-k]").forEach(i => i.addEventListener(i.type === "range" ? "input" : "change", () => {
+    const k = i.dataset.k; LY[k] = i.type === "checkbox" ? i.checked : (k === "base" ? i.value : +i.value);
+    if (k === "hillK") LY.hills = true; if (k === "labelK") LY.labels = true;
+    sync(); saveLY(); if (k === "base") setTiles(); else applyLayers();
+  }));
+  pan.querySelector(".reset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); setTiles(); };
+  window.syncLayers = sync; sync();
+})();
+const Note = L.Control.extend({ options: { position: "bottomleft" }, onAdd() { const d = L.DomUtil.create("div", "mapnote"); d.id = "mapnote"; L.DomEvent.disableClickPropagation(d); return d; } });
+map.addControl(new Note());
+L.control.scale({ position: "bottomright" }).addTo(map);
+
+/* state */
+const S = { reasons: new Set(RK), conf: 3 };
+let PTS = [], zoneLayer = null;
+const SRC = ["Wikidata", "Beresford's gazetteer", "Ancient city or site (Wikidata)", "Wikipedia's list, placed by hand"];
+const CONF = ["high", "medium", "low", "none"];
+const srcOn = s => [LY.wd, LY.dmv, LY.anc, LY.hand][s];
+const visible = p => srcOn(p.src) && S.reasons.has(RK[p.r]) && p.c <= S.conf;
+function radius(p) { const z = map.getZoom(); const b = z < 3 ? 1.6 : z < 5 ? 2.4 : z < 8 ? 3.6 : 5; const k = p.src === 3 ? 1.9 : p.src === 2 ? 1.1 : RK[p.r] === "unknown" ? .9 : p.src === 1 ? .9 : 1.45; return b * k * LY.size; }
+function restyle() {
+  if (!PTS.length) return; const fg = css("--fg"), card = css("--card");
+  PTS.forEach(p => { const on = visible(p);
+    p.m.setStyle(on ? { radius: radius(p), fillColor: p.src === 2 ? "transparent" : col(RK[p.r]), fillOpacity: p.src === 2 ? 0 : .9, color: p.src === 3 ? fg : p.src === 2 ? col(RK[p.r]) : card, weight: p.src === 3 ? 1.6 : p.src === 2 ? 1.1 : (RK[p.r] === "unknown" || p.src === 1 ? 0 : .6), opacity: 1 } : { radius: 0, opacity: 0, fillOpacity: 0, weight: 0 }); });
+  status();
+}
+function counts() { const c = {}; RK.forEach(k => c[k] = 0); let n = 0; PTS.forEach(p => { if (visible(p)) { c[RK[p.r]]++; n++; } }); return [n, c]; }
+function status() {
+  const [n, c] = counts(); const known = n - c.unknown;
+  document.getElementById("mapnote").innerHTML = `<b>${fmt(n)} places</b>${fmt(known)} with a recorded reason`;
+  if (!S.sel) intro();
+}
+function legend() {
+  document.getElementById("legend").innerHTML = R.reasons.map(r => `<span><i style="background:${col(r.key)}"></i>${esc(r.full)}</span>`).join("") +
+    (LY.hand ? `<span><i class="ring"></i>Placed by hand from Wikipedia's list</span>` : "") + (LY.anc ? `<span><i class="hol"></i>Ancient city or site (hollow)</span>` : "");
+}
+(function () { const row = document.getElementById("reasonRow");
+  R.reasons.forEach(r => { const b = document.createElement("button"); b.className = "btn"; b.setAttribute("aria-pressed", "true"); b.innerHTML = `<span class="dot" style="background:${r.colour}"></span>${esc(r.label)}`;
+    b.onclick = () => { if (S.reasons.has(r.key) && S.reasons.size === RK.length) S.reasons = new Set([r.key]); else if (S.reasons.has(r.key)) { S.reasons.delete(r.key); if (!S.reasons.size) S.reasons = new Set(RK); } else S.reasons.add(r.key);
+      row.querySelectorAll(".btn").forEach((x, i) => i < RK.length && x.setAttribute("aria-pressed", S.reasons.has(RK[i]))); S.sel = null; restyle(); };
+    row.appendChild(b); });
+  const all = document.createElement("button"); all.className = "btn"; all.textContent = "All"; all.onclick = () => { S.reasons = new Set(RK); row.querySelectorAll(".btn").forEach((x, i) => i < RK.length && x.setAttribute("aria-pressed", "true")); restyle(); }; row.appendChild(all);
+})();
+document.getElementById("conf").onchange = e => { S.conf = +e.target.value; S.sel = null; restyle(); };
+
+function popupHtml(p) {
+  const r = RS[RK[p.r]], d = p.d;
+  const link = p.src === 0 || p.src === 2 ? `<a href="https://www.wikidata.org/wiki/${esc(d[9])}" target="_blank" rel="noopener">Wikidata ${esc(d[9])}</a>` : p.src === 3 && d[9] ? `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(String(d[9]).replace(/ /g, "_"))}" target="_blank" rel="noopener">Wikipedia</a>` : "";
+  return `<b class="t">${esc(d[0] || "(no English label)")}</b>${esc([d[6], d[7]].filter(Boolean).join(", "))}<br>
+<span class="chip" style="background:${r.colour}">${esc(r.full)}</span><br>
+${RK[p.r] !== "unknown" ? `Confidence: ${CONF[p.c]}${d[11] ? `<br><span class="q">${esc(d[11])}</span>` : ""}<br>` : ""}
+${d[8] != null ? `Dissolved or abandoned: ${d[8] < 0 ? -d[8] + " BC" : d[8]}<br>` : ""}${d[10] ? `${esc(d[10])}<br>` : ""}${d[12] ? `<span class="q">"${esc(d[12])}"</span><br>` : ""}
+<small>${esc(SRC[p.src])}${p.src === 3 ? ", approximate position" : ""}${d[13] && p.src !== 1 ? " · " + esc(d[13]) : ""}</small>${link ? "<br>" + link : ""}`;
+}
+fetch("data/points.json").then(r => r.json()).then(J => {
+  J.p.forEach(d => { const p = { d, lat: d[1], lon: d[2], r: d[3], c: d[4], src: d[5] };
+    p.m = L.circleMarker([p.lat, p.lon], { renderer: canvas, radius: 2 }).bindPopup(() => popupHtml(p), { maxWidth: 300 });
+    p.m.on("popupopen", () => { S.sel = p; });
+    p.m.addTo(map); PTS.push(p); });
+  PTS.sort((a, b) => (a.src === 3) - (b.src === 3));
+  PTS.filter(p => RK[p.r] !== "unknown").forEach(p => p.m.bringToFront());
+  PTS.filter(p => p.src === 3).forEach(p => p.m.bringToFront());
+  zoneLayer = L.layerGroup([L.circle([51.389, 30.099], { radius: 45000, pane: "zones", color: RS.nuclear.colour, weight: 1.5, dashArray: "4,4", fillOpacity: .06, interactive: false }),
+    L.circle([37.4214, 141.0325], { radius: 30000, pane: "zones", color: RS.nuclear.colour, weight: 1.5, dashArray: "4,4", fillOpacity: .06, interactive: false })]);
+  setTiles(); buildSearch(); focusRow(); intro();
+}).catch(e => { console.error(e); document.getElementById("side").textContent = "The map data could not be loaded."; });
+map.on("zoomend", restyle);
+
+/* side panel */
+const side = document.getElementById("side");
+function intro() {
+  if (!PTS.length) return;
+  const [n, c] = counts(); const bc = {}; PTS.forEach(p => { if (visible(p) && map.getBounds().contains([p.lat, p.lon])) { const k = p.d[6] || "Unknown"; bc[k] = (bc[k] || 0) + 1; } });
+  const top = Object.entries(bc).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  side.innerHTML = `<h4>Showing</h4><div class="big">${fmt(n)} places</div><p class="sub">${fmt(n - c.unknown)} with a recorded reason (${n ? Math.round((n - c.unknown) / n * 100) : 0}%)</p>
+<table>${R.reasons.map(r => `<tr><td><span class="sw" style="background:${col(r.key)}"></span>${esc(r.full)}</td><td class="num">${fmt(c[r.key])}</td></tr>`).join("")}</table>
+<h4>In view, by country</h4><table>${top.map(([k, v]) => `<tr><td><span class="go" data-k="${esc(k)}">${esc(k)}</span></td><td class="num">${fmt(v)}</td></tr>`).join("")}</table>
+<p class="sub">Tap a point for its story. Use the reason buttons to filter, or the menu to hide places whose reason is not recorded.</p>`;
+  side.querySelectorAll("[data-k]").forEach(a => a.onclick = () => focusCountry(a.dataset.k));
+}
+map.on("moveend", () => { if (!S.sel) intro(); });
+map.on("popupclose", () => { S.sel = null; intro(); });
+function fitPts(ps) { if (!ps.length) return; const b = L.latLngBounds(ps.map(p => [p.lat, p.lon])); map.flyToBounds(b.pad(.1), { maxZoom: 9, duration: .8 }); }
+function toMap() { document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); }
+function focusCountry(k) { toMap(); setTimeout(() => fitPts(PTS.filter(p => p.d[6] === k && p.src !== 2)), 300); }
+function focusRegion(k) { toMap(); setTimeout(() => fitPts(PTS.filter(p => p.d[7] === k && p.src === 0)), 300); }
+function focusName(n) { const p = PTS.find(p => p.d[0] === n && p.src !== 2); if (!p) return; toMap(); if (p.src === 3) { LY.hand = true; window.syncLayers(); } S.reasons = new Set(RK); S.conf = 3; document.getElementById("conf").value = 3; document.querySelectorAll("#reasonRow .btn").forEach((x, i) => i < RK.length && x.setAttribute("aria-pressed", "true")); restyle(); setTimeout(() => { map.flyTo([p.lat, p.lon], 9, { duration: .8 }); setTimeout(() => p.m.openPopup(), 900); }, 300); }
+
+/* search and focus */
+function buildSearch() {
+  const q = document.getElementById("q"), sug = document.getElementById("sug"); let items = [], sel = -1;
+  const ctys = {}, regs = {}; PTS.forEach(p => { if (p.src === 2) return; if (p.d[6]) ctys[p.d[6]] = (ctys[p.d[6]] || 0) + 1; if (p.src === 0 && p.d[6] === "United States" && p.d[7]) regs[p.d[7]] = (regs[p.d[7]] || 0) + 1; });
+  const idx = [...Object.entries(ctys).map(([k, v]) => ({ t: "c", k, n: k, s: `country, ${fmt(v)} places` })), ...Object.entries(regs).map(([k, v]) => ({ t: "r", k, n: k, s: `US state, ${fmt(v)} ghost towns` })),
+    ...PTS.filter(p => p.d[0]).map(p => ({ t: "p", k: p, n: p.d[0], s: `${p.d[6] || ""}${p.src === 2 ? ", ancient site" : p.src === 1 ? ", deserted medieval village" : ""}` }))];
+  const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  idx.forEach(it => it.nn = norm(it.n));
+  function show() { sug.innerHTML = items.map((it, i) => `<li role="option" aria-selected="${i === sel}" data-i="${i}">${esc(it.n)} <span>${esc(it.s)}</span></li>`).join(""); sug.style.display = items.length ? "block" : "none"; sug.querySelectorAll("li").forEach(li => li.onmousedown = e => { e.preventDefault(); go(items[+li.dataset.i]); }); }
+  function go(it) { q.value = it.n; sug.style.display = "none";
+    if (it.t === "c") focusCountry(it.k); else if (it.t === "r") focusRegion(it.k);
+    else { const p = it.k; if (p.src === 2 && !LY.anc) { LY.anc = true; window.syncLayers(); } if (p.src === 3 && !LY.hand) { LY.hand = true; window.syncLayers(); } S.reasons = new Set(RK); S.conf = 3; document.getElementById("conf").value = 3; restyle(); map.flyTo([p.lat, p.lon], 10, { duration: .8 }); setTimeout(() => p.m.openPopup(), 900); } }
+  q.addEventListener("input", () => { const v = norm(q.value.trim()); sel = -1; if (v.length < 2) { items = []; show(); return; }
+    items = idx.filter(it => it.nn.includes(v)).sort((a, b) => (a.nn.startsWith(v) ? 0 : 1) - (b.nn.startsWith(v) ? 0 : 1) || ({ c: 0, r: 1, p: 2 }[a.t] - { c: 0, r: 1, p: 2 }[b.t])).slice(0, 12); show(); });
+  q.addEventListener("keydown", e => { if (e.key === "ArrowDown") { sel = Math.min(items.length - 1, sel + 1); show(); e.preventDefault(); } else if (e.key === "ArrowUp") { sel = Math.max(0, sel - 1); show(); e.preventDefault(); } else if (e.key === "Enter" && items.length) go(items[Math.max(0, sel)]); else if (e.key === "Escape") sug.style.display = "none"; });
+  q.addEventListener("blur", () => setTimeout(() => sug.style.display = "none", 150));
+}
+function focusRow() {
+  const row = document.getElementById("focusRow");
+  [["World", [30, 10], 2], ["American West", [40, -113], 5], ["England", [53, -1.5], 6], ["Chernobyl zone", [51.35, 30.1], 8.5], ["Newfoundland", [48.5, -56], 6], ["Greece", [39.5, 22.5], 6.5], ["Australia", [-28, 135], 4], ["Mexico", [22, -101], 5]].forEach(([n, c, z]) => {
+    const b = document.createElement("button"); b.className = "btn"; b.textContent = n; b.onclick = () => map.flyTo(c, small() ? z - .5 : z, { duration: .8 }); row.appendChild(b); });
+}
+
+/* theme */
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark"; try { localStorage.setItem("ghost_theme", r.dataset.theme); } catch (e) {} setTiles(); redraws.forEach(f => f()); legend(); };
+try { const t = localStorage.getItem("ghost_theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+legend();
+</script>
+<!-- map-fullscreen v1 -->
+<style id="mfs-style">
+.mfs-btn{position:absolute;top:10px;right:10px;z-index:1001;width:34px;height:34px;border:2px solid rgba(0,0,0,.25);border-radius:4px;background:#fff;color:#222;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.mfs-btn:hover{background:#f2f2f2}
+.mfs-btn svg{width:18px;height:18px}
+.mfs-host.mfs-btn-left .mfs-btn{right:auto;left:54px}
+.mfs-fake{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;z-index:100000!important;border-radius:0!important}
+html.mfs-lock,html.mfs-lock body{overflow:hidden!important}
+:fullscreen.mfs-host{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;border-radius:0!important}
+</style>
+<script id="mfs-script">
+(function(){
+  var ICON_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  var ICON_CLOSE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  function poke(){setTimeout(function(){window.dispatchEvent(new Event('resize'));},60);setTimeout(function(){window.dispatchEvent(new Event('resize'));},400);}
+  function realFS(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function add(el){
+    if(el.__mfs)return; el.__mfs=1;
+    var cs=getComputedStyle(el); if(cs.position==='static')el.style.position='relative';
+    el.classList.add('mfs-host');
+    // avoid clashing with a top-right Leaflet control (e.g. "Map layers")
+    var tr=el.querySelector('.leaflet-top.leaflet-right');
+    if(tr&&tr.children.length){ el.classList.add('mfs-btn-left'); }
+    var b=document.createElement('button'); b.type='button'; b.className='mfs-btn';
+    b.title='Full screen map'; b.setAttribute('aria-label','Full screen map'); b.innerHTML=ICON_OPEN;
+    ['click','dblclick','mousedown','touchstart','wheel'].forEach(function(t){b.addEventListener(t,function(e){e.stopPropagation();},{passive:t!=='click'});});
+    function setIcon(on){b.innerHTML=on?ICON_CLOSE:ICON_OPEN;b.title=on?'Exit full screen':'Full screen map';b.setAttribute('aria-label',b.title);}
+    function exitFake(){el.classList.remove('mfs-fake');document.documentElement.classList.remove('mfs-lock');setIcon(false);poke();}
+    b.addEventListener('click',function(e){
+      e.preventDefault();
+      if(el.classList.contains('mfs-fake')){exitFake();return;}
+      if(realFS()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}
+      var req=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(req){ try{ var p=req.call(el); if(p&&p.catch)p.catch(function(){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();}); }catch(err){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();} }
+      else { el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke(); }
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&el.classList.contains('mfs-fake'))exitFake();});
+    ['fullscreenchange','webkitfullscreenchange'].forEach(function(t){document.addEventListener(t,function(){setIcon(realFS()===el);poke();});});
+    el.appendChild(b);
+  }
+  function scan(){
+    var els=document.querySelectorAll('[data-fullscreen-map], .leaflet-container, .maplibregl-map, .mapboxgl-map');
+    els.forEach(function(el){
+      if(el.closest('.mfs-host')&&!el.classList.contains('mfs-host'))return;
+      var r=el.getBoundingClientRect(); if(r.width<200||r.height<150)return;
+      add(el);
+    });
+  }
+  function start(){scan(); var n=0; var t=setInterval(function(){scan(); if(++n>20)clearInterval(t);},500);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start); else start();
+})();
+</script>
+<!-- /map-fullscreen -->
+
+</body>
+</html>

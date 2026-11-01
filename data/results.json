@@ -1,0 +1,2171 @@
+{
+ "raw_rows": 19444,
+ "raw_items": 10217,
+ "n_nocoord": 95,
+ "n_ghost": 3374,
+ "n_ancient": 4249,
+ "n_dropped": 2498,
+ "n_mexico": 2456,
+ "n_dropped_other": 42,
+ "n_dup": 1,
+ "n_dmv": 2074,
+ "n_dmv_dmv": 2000,
+ "n_dmh": 74,
+ "n_map": 5448,
+ "n_hand": 44,
+ "n_wiki": 492,
+ "n_wiki_notes": 6,
+ "n_wiki_matched": 45,
+ "n_article_matched": 29,
+ "n_ghost_nolabel": 93,
+ "n_points_total": 9741,
+ "n_countries_ghost": 53,
+ "us_n": 2700,
+ "us_share_wd": 0.8002371072910492,
+ "ca_n": 265,
+ "gr_n": 101,
+ "au_n": 58,
+ "uk_wd_n": 12,
+ "dmv_share_map": 0.38069016152716595,
+ "us_dmv_share_map": 0.8762848751835536,
+ "top_countries": [
+  {
+   "country": "United States",
+   "n": 2700
+  },
+  {
+   "country": "Canada",
+   "n": 265
+  },
+  {
+   "country": "Greece",
+   "n": 101
+  },
+  {
+   "country": "Australia",
+   "n": 58
+  },
+  {
+   "country": "Czech Republic",
+   "n": 39
+  },
+  {
+   "country": "Russia",
+   "n": 32
+  },
+  {
+   "country": "Italy",
+   "n": 25
+  },
+  {
+   "country": "Sweden",
+   "n": 24
+  },
+  {
+   "country": "Belarus",
+   "n": 14
+  },
+  {
+   "country": "United Kingdom",
+   "n": 12
+  },
+  {
+   "country": "Spain",
+   "n": 12
+  },
+  {
+   "country": "New Zealand",
+   "n": 10
+  },
+  {
+   "country": "Slovakia",
+   "n": 8
+  },
+  {
+   "country": "Ukraine",
+   "n": 7
+  },
+  {
+   "country": "Chile",
+   "n": 5
+  }
+ ],
+ "n_countries_1to9": 41,
+ "africa_n": 8,
+ "asia_n": 17,
+ "sam_n": 9,
+ "afasam": 34,
+ "anc_top": [
+  {
+   "country": "Turkey",
+   "n": 1193
+  },
+  {
+   "country": "Greece",
+   "n": 1005
+  },
+  {
+   "country": "Italy",
+   "n": 373
+  },
+  {
+   "country": "Spain",
+   "n": 300
+  },
+  {
+   "country": "France",
+   "n": 223
+  },
+  {
+   "country": "Romania",
+   "n": 128
+  }
+ ],
+ "anc_tr_gr_share": 0.5172981878088962,
+ "reasons": [
+  {
+   "key": "nuclear",
+   "label": "Nuclear",
+   "full": "Nuclear accident zone (Chernobyl, Fukushima)",
+   "colour": "#7FA80E"
+  },
+  {
+   "key": "war",
+   "label": "War",
+   "full": "War, conflict or military use",
+   "colour": "#B8322A"
+  },
+  {
+   "key": "disaster",
+   "label": "Disaster",
+   "full": "Natural disaster, erosion or contamination",
+   "colour": "#2B78B4"
+  },
+  {
+   "key": "reservoir",
+   "label": "Reservoir",
+   "full": "Flooded by a reservoir or dam",
+   "colour": "#16A2A6"
+  },
+  {
+   "key": "mining",
+   "label": "Mining",
+   "full": "Mining or resource boomtown",
+   "colour": "#D88A12"
+  },
+  {
+   "key": "medieval",
+   "label": "Medieval",
+   "full": "Deserted medieval village or plague",
+   "colour": "#C04F92"
+  },
+  {
+   "key": "economic",
+   "label": "Decline",
+   "full": "Economic decline, depopulation or relocation",
+   "colour": "#6D55A3"
+  },
+  {
+   "key": "unknown",
+   "label": "Unknown",
+   "full": "Reason not recorded",
+   "colour": "#9AA0A4"
+  }
+ ],
+ "wd_reason": {
+  "nuclear": 3,
+  "war": 4,
+  "disaster": 9,
+  "reservoir": 7,
+  "mining": 114,
+  "medieval": 5,
+  "economic": 23,
+  "unknown": 3209
+ },
+ "wd_known": 165,
+ "wd_known_share": 0.04890337877889745,
+ "wd_conf": {
+  "high": 88,
+  "medium": 16,
+  "low": 61,
+  "none": 3209
+ },
+ "wd_known_hm": 104,
+ "wd_mining_low": 61,
+ "wd_from_list": 32,
+ "wd_from_article": 16,
+ "wd_from_desc": 37,
+ "wd_from_zone": 3,
+ "wd_from_class": 16,
+ "anc_known": 34,
+ "wiki_reason": {
+  "nuclear": 24,
+  "war": 55,
+  "disaster": 54,
+  "reservoir": 27,
+  "mining": 81,
+  "medieval": 9,
+  "economic": 50,
+  "unknown": 192
+ },
+ "wiki_known": 300,
+ "wiki_known_share": 0.6097560975609756,
+ "wiki_reason_share": {
+  "nuclear": 0.08,
+  "war": 0.18333333333333332,
+  "disaster": 0.18,
+  "reservoir": 0.09,
+  "mining": 0.27,
+  "medieval": 0.03,
+  "economic": 0.16666666666666666
+ },
+ "wiki_top_reason": "mining",
+ "wiki_rank": [
+  "mining",
+  "war",
+  "disaster",
+  "economic",
+  "reservoir",
+  "nuclear",
+  "medieval"
+ ],
+ "wiki_from_group": 40,
+ "wiki_countries": 90,
+ "wiki_by_cont": [
+  {
+   "continent": "Europe",
+   "label": "Europe",
+   "n": 242,
+   "known": 137,
+   "by": {
+    "nuclear": 23,
+    "war": 33,
+    "disaster": 26,
+    "reservoir": 16,
+    "mining": 6,
+    "medieval": 6,
+    "economic": 27,
+    "unknown": 105
+   },
+   "top": "war",
+   "top_n": 33
+  },
+  {
+   "continent": "Asia",
+   "label": "Asia",
+   "n": 89,
+   "known": 45,
+   "by": {
+    "nuclear": 1,
+    "war": 16,
+    "disaster": 7,
+    "reservoir": 0,
+    "mining": 9,
+    "medieval": 2,
+    "economic": 10,
+    "unknown": 44
+   },
+   "top": "war",
+   "top_n": 16
+  },
+  {
+   "continent": "Africa",
+   "label": "Africa",
+   "n": 29,
+   "known": 20,
+   "by": {
+    "nuclear": 0,
+    "war": 3,
+    "disaster": 2,
+    "reservoir": 0,
+    "mining": 11,
+    "medieval": 1,
+    "economic": 3,
+    "unknown": 9
+   },
+   "top": "mining",
+   "top_n": 11
+  },
+  {
+   "continent": "North America",
+   "label": "North America",
+   "n": 29,
+   "known": 24,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 6,
+    "reservoir": 8,
+    "mining": 8,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 5
+   },
+   "top": "reservoir",
+   "top_n": 8
+  },
+  {
+   "continent": "South America",
+   "label": "South America",
+   "n": 27,
+   "known": 16,
+   "by": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 6,
+    "reservoir": 1,
+    "mining": 6,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 11
+   },
+   "top": "disaster",
+   "top_n": 6
+  },
+  {
+   "continent": "Oceania",
+   "label": "Oceania",
+   "n": 69,
+   "known": 58,
+   "by": {
+    "nuclear": 0,
+    "war": 2,
+    "disaster": 7,
+    "reservoir": 2,
+    "mining": 41,
+    "medieval": 0,
+    "economic": 6,
+    "unknown": 11
+   },
+   "top": "mining",
+   "top_n": 41
+  },
+  {
+   "continent": "Antarctica and sub-Antarctic islands",
+   "label": "Antarctica",
+   "n": 7,
+   "known": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 7
+   },
+   "top": null,
+   "top_n": 0
+  }
+ ],
+ "wiki_oc_mining": 41,
+ "wiki_oc_n": 69,
+ "wiki_eu_n": 242,
+ "wiki_eu_war": 33,
+ "wiki_eu_res": 16,
+ "wiki_eu_nuc": 23,
+ "wiki_af_mining": 11,
+ "wiki_af_n": 29,
+ "wiki_mx_res": 8,
+ "wiki_mx_mining": 8,
+ "wiki_mx_n": 23,
+ "wiki_uk_n": 38,
+ "wiki_uk_war": 9,
+ "wiki_uk_res": 6,
+ "wiki_uk_dis": 5,
+ "wiki_au_n": 51,
+ "wiki_au_mining": 33,
+ "wiki_ua_war": 7,
+ "wiki_ua_nuc": 14,
+ "by_country_top": [
+  {
+   "country": "United States",
+   "n": 2700,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 4,
+    "reservoir": 6,
+    "mining": 79,
+    "medieval": 0,
+    "economic": 7,
+    "unknown": 2604
+   }
+  },
+  {
+   "country": "Canada",
+   "n": 265,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 10,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 254
+   }
+  },
+  {
+   "country": "Greece",
+   "n": 101,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 100
+   }
+  },
+  {
+   "country": "Australia",
+   "n": 58,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 1,
+    "mining": 15,
+    "medieval": 0,
+    "economic": 4,
+    "unknown": 38
+   }
+  },
+  {
+   "country": "Czech Republic",
+   "n": 39,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 38
+   }
+  },
+  {
+   "country": "Russia",
+   "n": 32,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 4,
+    "unknown": 27
+   }
+  },
+  {
+   "country": "Italy",
+   "n": 25,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 2,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 22
+   }
+  },
+  {
+   "country": "Sweden",
+   "n": 24,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 23
+   }
+  },
+  {
+   "country": "Belarus",
+   "n": 14,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 14
+   }
+  },
+  {
+   "country": "United Kingdom",
+   "n": 12,
+   "dmv": 2074,
+   "by": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 3,
+    "unknown": 8
+   }
+  },
+  {
+   "country": "Spain",
+   "n": 12,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 11
+   }
+  },
+  {
+   "country": "New Zealand",
+   "n": 10,
+   "dmv": 0,
+   "by": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 4,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 6
+   }
+  }
+ ],
+ "us_states_n": 48,
+ "us_top_states": [
+  {
+   "state": "Texas",
+   "n": 335,
+   "west": false,
+   "mining": 5
+  },
+  {
+   "state": "Missouri",
+   "n": 289,
+   "west": false,
+   "mining": 0
+  },
+  {
+   "state": "Nevada",
+   "n": 200,
+   "west": true,
+   "mining": 19
+  },
+  {
+   "state": "California",
+   "n": 146,
+   "west": true,
+   "mining": 7
+  },
+  {
+   "state": "Utah",
+   "n": 134,
+   "west": true,
+   "mining": 6
+  },
+  {
+   "state": "Washington",
+   "n": 111,
+   "west": true,
+   "mining": 2
+  },
+  {
+   "state": "Colorado",
+   "n": 103,
+   "west": true,
+   "mining": 11
+  },
+  {
+   "state": "Arizona",
+   "n": 101,
+   "west": true,
+   "mining": 4
+  },
+  {
+   "state": "Oregon",
+   "n": 98,
+   "west": true,
+   "mining": 5
+  },
+  {
+   "state": "Kansas",
+   "n": 93,
+   "west": false,
+   "mining": 0
+  },
+  {
+   "state": "Wisconsin",
+   "n": 75,
+   "west": false,
+   "mining": 0
+  },
+  {
+   "state": "Minnesota",
+   "n": 67,
+   "west": false,
+   "mining": 0
+  }
+ ],
+ "us_west_n": 1053,
+ "us_west_share": 0.39,
+ "us_west_mining": 65,
+ "us_rest_mining": 14,
+ "us_west_mining_share": 0.06172839506172839,
+ "us_rest_mining_share": 0.008500303582270795,
+ "us_west_mining_hm": 18,
+ "us_west_mining_low": 47,
+ "us_west_known": 70,
+ "us_west_mining_of_known": 0.9285714285714286,
+ "us_rest_known": 26,
+ "ca_nl": 141,
+ "us_desc_formula": 2458,
+ "us_desc_formula_share": 0.9103703703703704,
+ "us_tx_mo": 624,
+ "us_tx": 335,
+ "us_mo": 289,
+ "us_nv": 200,
+ "bodie_ca_reason": [
+  "unknown"
+ ],
+ "rhyolite_reason": [
+  "unknown"
+ ],
+ "west_low_names": [
+  "Argenta",
+  "Bodie Mine",
+  "Bonanza",
+  "Bonanza City",
+  "Borax",
+  "Bullfrog",
+  "Bullion",
+  "Carbonate",
+  "Chloride City",
+  "Coal City",
+  "Cobre",
+  "Copper",
+  "Copper Creek",
+  "El Dorado City",
+  "Galena",
+  "Garnet",
+  "Gold Acres",
+  "Gold Center",
+  "Gold Creek",
+  "Gold Point",
+  "Golden",
+  "La Plata",
+  "Mary Murphy Mine",
+  "Mineral Hill",
+  "Mount Ophir",
+  "New Idria Mercury Mine",
+  "Oro City",
+  "Placer",
+  "Quartz Mountain",
+  "Silver Bow",
+  "Silver City",
+  "Silver Creek",
+  "Silver Lake",
+  "Silver Reef",
+  "Silver Zone",
+  "Telluride",
+  "Tungsten",
+  "Vulture Mine",
+  "Willow Creek Mine"
+ ],
+ "us_west_states": [
+  {
+   "state": "Nevada",
+   "n": 200,
+   "mining": 19,
+   "dens": 6.97
+  },
+  {
+   "state": "California",
+   "n": 146,
+   "mining": 7,
+   "dens": 3.56
+  },
+  {
+   "state": "Utah",
+   "n": 134,
+   "mining": 6,
+   "dens": 6.1
+  },
+  {
+   "state": "Washington",
+   "n": 111,
+   "mining": 2,
+   "dens": 6.38
+  },
+  {
+   "state": "Colorado",
+   "n": 103,
+   "mining": 11,
+   "dens": 3.83
+  },
+  {
+   "state": "Arizona",
+   "n": 101,
+   "mining": 4,
+   "dens": 3.42
+  },
+  {
+   "state": "Oregon",
+   "n": 98,
+   "mining": 5,
+   "dens": 3.89
+  },
+  {
+   "state": "New Mexico",
+   "n": 58,
+   "mining": 1,
+   "dens": 1.84
+  },
+  {
+   "state": "Montana",
+   "n": 56,
+   "mining": 7,
+   "dens": 1.48
+  },
+  {
+   "state": "Idaho",
+   "n": 24,
+   "mining": 2,
+   "dens": 1.11
+  },
+  {
+   "state": "Wyoming",
+   "n": 22,
+   "mining": 1,
+   "dens": 0.87
+  }
+ ],
+ "us_west_dens": 3.4286672250704155,
+ "us_rest_dens": 3.311513759362272,
+ "us_dens_top": [
+  "Missouri",
+  "Delaware",
+  "New Jersey"
+ ],
+ "us_names": {
+  "bodie": true,
+  "rhyolite": true
+ },
+ "dmv_counties": [
+  {
+   "county": "Yorkshire",
+   "n": 358
+  },
+  {
+   "county": "Lincolnshire",
+   "n": 220
+  },
+  {
+   "county": "Northumberland",
+   "n": 165
+  },
+  {
+   "county": "Hampshire",
+   "n": 135
+  },
+  {
+   "county": "Warwickshire",
+   "n": 127
+  },
+  {
+   "county": "Norfolk",
+   "n": 126
+  },
+  {
+   "county": "Wiltshire",
+   "n": 103
+  },
+  {
+   "county": "Oxfordshire",
+   "n": 99
+  },
+  {
+   "county": "Northamptonshire",
+   "n": 80
+  },
+  {
+   "county": "Nottinghamshire",
+   "n": 67
+  }
+ ],
+ "dmv_n_counties": 37,
+ "dmv_top3": 743,
+ "dmv_top3_share": 0.35824493731919,
+ "dmv_yorks": 358,
+ "dmv_lincs": 220,
+ "dmv_nland": 165,
+ "dmv_periods": [
+  {
+   "period": "Before 1348",
+   "n": 20
+  },
+  {
+   "period": "1348 to 1449",
+   "n": 47
+  },
+  {
+   "period": "1450 to 1549",
+   "n": 62
+  },
+  {
+   "period": "1550 to 1699",
+   "n": 98
+  },
+  {
+   "period": "1700 onwards",
+   "n": 43
+  }
+ ],
+ "dmv_dated": 270,
+ "dmv_undated": 1804,
+ "dmv_full_record": 392,
+ "dmv_causes": {
+  "enclosure_or_pasture": 63,
+  "plague": 32,
+  "emparking": 46,
+  "monastic_landholder": 41,
+  "sea_or_flooding": 11
+ },
+ "dmv_with_desc_text": 392,
+ "dmv_mid": [
+  1375,
+  1630,
+  1600,
+  1500,
+  1750,
+  1650,
+  1650,
+  1650,
+  1650,
+  1575,
+  1649,
+  1799,
+  1575,
+  1575,
+  1619,
+  1575,
+  1699,
+  1549,
+  1600,
+  1550,
+  1575,
+  1525,
+  1500,
+  1649,
+  1419,
+  1400,
+  1699,
+  1400,
+  1575,
+  1400,
+  1575,
+  1575,
+  1575,
+  1575,
+  1785,
+  1375,
+  1450,
+  1250,
+  1450,
+  1350,
+  1500,
+  1850,
+  1624,
+  1740,
+  1550,
+  1450,
+  1350,
+  1500,
+  1500,
+  1380,
+  1550,
+  1450,
+  1750,
+  1650,
+  1942,
+  1350,
+  1550,
+  1500,
+  1750,
+  1375,
+  1550,
+  1850,
+  1450,
+  1600,
+  1500,
+  1400,
+  1400,
+  1350,
+  1725,
+  1530,
+  1600,
+  1710,
+  1550,
+  1550,
+  1450,
+  1420,
+  1815,
+  1450,
+  1550,
+  1450,
+  1550,
+  1650,
+  1650,
+  1650,
+  1550,
+  1500,
+  1550,
+  1550,
+  1600,
+  1550,
+  1699,
+  1575,
+  1349,
+  1449,
+  1519,
+  1579,
+  1400,
+  1149,
+  1499,
+  1469,
+  1400,
+  1700,
+  1650,
+  1505,
+  1550,
+  1550,
+  1545,
+  1800,
+  1700,
+  1555,
+  1650,
+  1575,
+  1850,
+  1850,
+  1550,
+  1575,
+  1550,
+  1520,
+  1550,
+  1550,
+  1600,
+  1400,
+  1500,
+  1550,
+  1550,
+  1550,
+  1550,
+  1700,
+  1700,
+  1525,
+  1670,
+  1560,
+  1600,
+  1600,
+  1725,
+  1650,
+  1350,
+  1500,
+  1600,
+  1510,
+  1450,
+  1385,
+  1370,
+  1750,
+  1550,
+  1750,
+  1550,
+  1450,
+  1600,
+  1550,
+  1450,
+  1565,
+  1550,
+  1550,
+  1550,
+  1750,
+  1465,
+  1700,
+  1825,
+  1400,
+  1450,
+  1550,
+  1350,
+  1380,
+  1440,
+  1760,
+  1520,
+  1510,
+  1485,
+  1650,
+  1350,
+  1460,
+  1275,
+  1360,
+  1375,
+  1450,
+  1675,
+  1475,
+  1380,
+  1380,
+  1350,
+  1475,
+  1520,
+  1360,
+  1500,
+  1425,
+  1530,
+  1790,
+  1499,
+  1564,
+  1549,
+  1469,
+  1499,
+  1449,
+  1449,
+  1599,
+  1514,
+  1479,
+  1499,
+  1519,
+  1469,
+  1499,
+  1249,
+  1399,
+  1549,
+  1499,
+  1677,
+  1434,
+  1499,
+  1650,
+  1549,
+  1469,
+  1575,
+  1349,
+  1499,
+  1500,
+  1499,
+  1449,
+  1599,
+  1399,
+  1549,
+  1674,
+  1750,
+  1750,
+  1150,
+  1870,
+  1750,
+  1750,
+  1650,
+  1650,
+  1750,
+  1550,
+  1550,
+  1362,
+  1185,
+  1350,
+  1250,
+  1550,
+  1550,
+  1700,
+  1775,
+  1700,
+  1370,
+  1550,
+  1700,
+  1700,
+  1650,
+  1650,
+  1750,
+  1550,
+  1400,
+  1625,
+  1850,
+  1375,
+  1450,
+  1350,
+  1675,
+  1200,
+  1650,
+  1650,
+  1375,
+  1685,
+  1700,
+  1420,
+  1400,
+  1475,
+  1720,
+  1500,
+  1490,
+  1700
+ ],
+ "dmv_mid_median": 1550,
+ "dmv_1450_1699": 0.5925925925925926,
+ "dmv_plague_period": 0.17407407407407408,
+ "eng_wd_ghost": 2,
+ "dmv_vs_rest_world_wd": 3.077151335311573,
+ "ps_wd_n": 62,
+ "ps_wd_by_country": [
+  {
+   "country": "Russia",
+   "n": 32
+  },
+  {
+   "country": "Belarus",
+   "n": 14
+  },
+  {
+   "country": "Ukraine",
+   "n": 7
+  },
+  {
+   "country": "Kazakhstan",
+   "n": 4
+  },
+  {
+   "country": "Turkmenistan",
+   "n": 1
+  },
+  {
+   "country": "Lithuania",
+   "n": 1
+  },
+  {
+   "country": "Armenia",
+   "n": 1
+  },
+  {
+   "country": "Azerbaijan",
+   "n": 1
+  },
+  {
+   "country": "Latvia",
+   "n": 1
+  }
+ ],
+ "ps_wd_reason": {
+  "nuclear": 3,
+  "war": 2,
+  "disaster": 1,
+  "reservoir": 0,
+  "mining": 0,
+  "medieval": 0,
+  "economic": 4,
+  "unknown": 52
+ },
+ "ps_wd_known": 10,
+ "ps_wd_nolabel": 30,
+ "ps_wiki_n": 82,
+ "ps_wiki_reason": {
+  "nuclear": 23,
+  "war": 12,
+  "disaster": 1,
+  "reservoir": 1,
+  "mining": 7,
+  "medieval": 1,
+  "economic": 7,
+  "unknown": 30
+ },
+ "ps_wiki_countries": 12,
+ "ps_wiki_soviet_word": 7,
+ "ps_wiki_by_country": [
+  {
+   "country": "Ukraine",
+   "n": 21,
+   "by": {
+    "nuclear": 14,
+    "war": 7
+   }
+  },
+  {
+   "country": "Russia",
+   "n": 18,
+   "by": {
+    "mining": 3,
+    "disaster": 1,
+    "unknown": 9,
+    "economic": 4,
+    "reservoir": 1
+   }
+  },
+  {
+   "country": "Tajikistan",
+   "n": 15,
+   "by": {
+    "unknown": 15
+   }
+  },
+  {
+   "country": "Belarus",
+   "n": 9,
+   "by": {
+    "nuclear": 9
+   }
+  },
+  {
+   "country": "Estonia",
+   "n": 5,
+   "by": {
+    "unknown": 3,
+    "mining": 2
+   }
+  },
+  {
+   "country": "Kyrgyzstan",
+   "n": 4,
+   "by": {
+    "economic": 1,
+    "mining": 2,
+    "unknown": 1
+   }
+  },
+  {
+   "country": "Georgia",
+   "n": 3,
+   "by": {
+    "medieval": 1,
+    "war": 2
+   }
+  },
+  {
+   "country": "Kazakhstan",
+   "n": 2,
+   "by": {
+    "war": 1,
+    "economic": 1
+   }
+  },
+  {
+   "country": "Latvia",
+   "n": 2,
+   "by": {
+    "war": 2
+   }
+  },
+  {
+   "country": "Azerbaijan",
+   "n": 1,
+   "by": {
+    "unknown": 1
+   }
+  },
+  {
+   "country": "Uzbekistan",
+   "n": 1,
+   "by": {
+    "unknown": 1
+   }
+  },
+  {
+   "country": "Lithuania",
+   "n": 1,
+   "by": {
+    "economic": 1
+   }
+  }
+ ],
+ "soviet_word_outside": 4,
+ "chernobyl_wiki": 23,
+ "chernobyl_wd": 3,
+ "by_wd_n": 14,
+ "ru_wd_n": 32,
+ "ru_yaroslavl_wiki": 10,
+ "tj_n": 15,
+ "ua_2022_wiki": 7,
+ "wd_dated": 46,
+ "wd_dated_unknownval": 1,
+ "wd_dated_since1900": 36,
+ "wd_dated_min": 1420,
+ "wd_dated_max": 2020,
+ "wiki_dated": 156,
+ "wiki_dated_since1900": 133,
+ "wiki_dated_since1900_share": 0.8525641025641025,
+ "wiki_dated_since2000": 33,
+ "wiki_dated_pre1600": 9,
+ "wiki_dated_century": 14,
+ "wiki_peak_decades": [
+  {
+   "decade": 2010,
+   "n": 19
+  },
+  {
+   "decade": 1980,
+   "n": 17
+  },
+  {
+   "decade": 1950,
+   "n": 16
+  },
+  {
+   "decade": 1990,
+   "n": 16
+  }
+ ],
+ "timeline_century": [
+  {
+   "century": 1000,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "dmv": 0
+  },
+  {
+   "century": 1100,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "dmv": 3
+  },
+  {
+   "century": 1200,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "dmv": 5
+  },
+  {
+   "century": 1300,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 3,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 2,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "dmv": 30
+  },
+  {
+   "century": 1400,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   },
+   "dmv": 56
+  },
+  {
+   "century": 1500,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 1,
+    "economic": 0,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   },
+   "dmv": 89
+  },
+  {
+   "century": 1600,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   },
+   "dmv": 44
+  },
+  {
+   "century": 1700,
+   "wiki": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "dmv": 33
+  },
+  {
+   "century": 1800,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 5,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 4,
+    "unknown": 2
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 7
+   },
+   "dmv": 9
+  },
+  {
+   "century": 1900,
+   "wiki": {
+    "nuclear": 9,
+    "war": 12,
+    "disaster": 16,
+    "reservoir": 18,
+    "mining": 13,
+    "medieval": 1,
+    "economic": 18,
+    "unknown": 13
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 2,
+    "reservoir": 4,
+    "mining": 3,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 23
+   },
+   "dmv": 1
+  },
+  {
+   "century": 2000,
+   "wiki": {
+    "nuclear": 0,
+    "war": 2,
+    "disaster": 7,
+    "reservoir": 2,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 3,
+    "unknown": 18
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 3
+   },
+   "dmv": 0
+  }
+ ],
+ "timeline_decade": [
+  {
+   "decade": 1840,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   }
+  },
+  {
+   "decade": 1850,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1860,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 3
+   }
+  },
+  {
+   "decade": 1870,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1880,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 3,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1890,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1900,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   }
+  },
+  {
+   "decade": 1910,
+   "wiki": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 1,
+    "reservoir": 1,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 2
+   }
+  },
+  {
+   "decade": 1920,
+   "wiki": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 2,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 2
+   }
+  },
+  {
+   "decade": 1930,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 2,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 3,
+    "unknown": 3
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 4,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1940,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 3,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 2
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 5
+   }
+  },
+  {
+   "decade": 1950,
+   "wiki": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 1,
+    "reservoir": 6,
+    "mining": 4,
+    "medieval": 1,
+    "economic": 2,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 2
+   }
+  },
+  {
+   "decade": 1960,
+   "wiki": {
+    "nuclear": 0,
+    "war": 2,
+    "disaster": 3,
+    "reservoir": 2,
+    "mining": 2,
+    "medieval": 0,
+    "economic": 4,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  },
+  {
+   "decade": 1970,
+   "wiki": {
+    "nuclear": 0,
+    "war": 2,
+    "disaster": 3,
+    "reservoir": 3,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 1
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 7
+   }
+  },
+  {
+   "decade": 1980,
+   "wiki": {
+    "nuclear": 9,
+    "war": 1,
+    "disaster": 4,
+    "reservoir": 1,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   }
+  },
+  {
+   "decade": 1990,
+   "wiki": {
+    "nuclear": 0,
+    "war": 4,
+    "disaster": 4,
+    "reservoir": 0,
+    "mining": 2,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 4
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 1,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 3
+   }
+  },
+  {
+   "decade": 2000,
+   "wiki": {
+    "nuclear": 0,
+    "war": 2,
+    "disaster": 2,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 2,
+    "unknown": 6
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 2
+   }
+  },
+  {
+   "decade": 2010,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 4,
+    "reservoir": 2,
+    "mining": 1,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 12
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 0
+   }
+  },
+  {
+   "decade": 2020,
+   "wiki": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 1,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 1,
+    "unknown": 0
+   },
+   "wd": {
+    "nuclear": 0,
+    "war": 0,
+    "disaster": 0,
+    "reservoir": 0,
+    "mining": 0,
+    "medieval": 0,
+    "economic": 0,
+    "unknown": 1
+   }
+  }
+ ],
+ "wiki_war_dated": [
+  1974,
+  1992,
+  2008,
+  1997,
+  2005,
+  1767,
+  1923,
+  1989,
+  1916,
+  1975,
+  1990,
+  1965,
+  1992,
+  1964,
+  1952
+ ],
+ "wiki_res_dated_median": 1951,
+ "wiki_mining_dated_median": 1953,
+ "wiki_dis_dated_n": 33,
+ "examples": {
+  "Plymouth": {
+   "name": "Plymouth",
+   "country": "Montserrat",
+   "reason": "disaster"
+  },
+  "Craco": {
+   "name": "Craco",
+   "country": "Italy",
+   "reason": "disaster"
+  },
+  "Kolmanskop": {
+   "name": "Kolmanskop",
+   "country": "Namibia",
+   "reason": "mining"
+  },
+  "Centralia": {
+   "name": "Centralia",
+   "country": "United States",
+   "reason": "disaster"
+  },
+  "Varosha": {
+   "name": "Varosha",
+   "country": "Northern Cyprus",
+   "reason": "war"
+  },
+  "Times Beach": {
+   "name": "Times Beach",
+   "country": "United States",
+   "reason": "disaster"
+  },
+  "Picher": {
+   "name": "Picher",
+   "country": "United States",
+   "reason": "disaster"
+  },
+  "Bodie": {
+   "name": "Bodie",
+   "country": "United States",
+   "reason": "unknown"
+  },
+  "Rhyolite": {
+   "name": "Rhyolite",
+   "country": "United States",
+   "reason": "unknown"
+  },
+  "Oatman": {
+   "name": "Oatman",
+   "country": "United States",
+   "reason": "mining"
+  }
+ },
+ "hand_names": [
+  "Dhanushkodi",
+  "Hashima Island",
+  "Ōkuma",
+  "Kadykchan",
+  "Quneitra",
+  "Old Ayutthaya",
+  "Kayaköy",
+  "Döllersheim",
+  "Doel",
+  "Oradour-sur-Glane",
+  "Spinalonga",
+  "Great Blasket Island",
+  "Bussana Vecchia",
+  "Civita di Bagnoregio",
+  "Curon in South Tyrol",
+  "Poggioreale",
+  "Pyramiden",
+  "Vilarinho da Furna",
+  "Mologa",
+  "Belchite",
+  "Chernobyl",
+  "Pripyat",
+  "Marinka",
+  "Soledar",
+  "Popasna",
+  "Derwent",
+  "Dunwich",
+  "Hallsands",
+  "Mardale",
+  "Tide Mills",
+  "Imber",
+  "Tyneham",
+  "Mingulay",
+  "Capel Celyn",
+  "Real de Catorce",
+  "Gwalia",
+  "Silverton",
+  "Wittenoom",
+  "Te Wairoa",
+  "Villa Epecuén",
+  "Fordlândia",
+  "Chaitén",
+  "Sewell",
+  "Armero"
+ ],
+ "hand_reason": {
+  "nuclear": 3,
+  "war": 11,
+  "disaster": 9,
+  "reservoir": 6,
+  "mining": 8,
+  "medieval": 0,
+  "economic": 7,
+  "unknown": 0
+ },
+ "n_points_page": 9741
+}
