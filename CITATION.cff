@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+title: "Ghost Towns of the World: Where Places Were Abandoned, and Why, in Wikidata, Wikipedia and England's Deserted Medieval Villages"
+type: dataset
+authors:
+  - family-names: Hotham
+    given-names: Tristan
+    orcid: "https://orcid.org/0000-0003-4931-9349"
+    affiliation: "Independent researcher"
+doi: "10.5281/zenodo.23857616"
+url: "https://maps.tristanhotham.com/ghost-towns/"
+repository-code: "https://github.com/Tristan-Hotham/ghost-towns"
+license: CC-BY-NC-SA-4.0
+keywords:
+  - "ghost towns"
+  - "abandoned settlements"
+  - "deserted medieval villages"
+  - "Wikidata"
+  - "Wikipedia"
+  - "mining towns"
+  - "Chernobyl"
+  - "open data bias"
+  - "data visualisation"
